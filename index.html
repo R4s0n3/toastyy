@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#f2e9d8" />
-    <meta name="description" content="Toastyy — stop the toaster before it pops." />
+    <meta name="description" content="Toastyy — stop the toaster before it pops. Earn XP and evolve your toast." />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -17,7 +17,7 @@
         <div class="loading-toaster" aria-hidden="true">
           <i></i><i></i><span></span>
         </div>
-        <strong>WARMING UP</strong>
+        <strong>BUTTERING UP</strong>
         <div class="loading-track"><i id="loadingBar"></i></div>
       </div>
       <header class="topbar">
@@ -43,7 +43,7 @@
         <canvas id="scene" aria-label="Interactive 3D toaster"></canvas>
 
         <div class="heat-lines" id="heatLines" aria-hidden="true">
-          <i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i>
         </div>
         <div class="heat-aura" id="heatAura" aria-hidden="true"></div>
         <div class="danger-vignette" id="dangerVignette" aria-hidden="true"></div>
@@ -57,31 +57,26 @@
         <div class="game-copy" id="gameCopy" aria-live="polite">
           <p class="eyebrow" id="eyebrow">YOUR TOASTER, YOUR RULES</p>
           <h1 id="headline">Set it. Pull it.</h1>
-          <p class="subcopy" id="subcopy">Turn the knob for difficulty, then pull the lever.</p>
+          <p class="subcopy" id="subcopy">Pull, time it right, and level up your toast.</p>
         </div>
 
         <div class="toaster-menu" id="toasterMenu" aria-label="Toaster controls">
-          <div class="difficulty-readout" id="difficultyReadout">
-            <span>DIFFICULTY</span>
-            <strong id="difficultyName">GOLDEN</strong>
-          </div>
           <button class="knob-hitbox" id="knobHitbox" type="button" role="slider" aria-valuemin="1" aria-valuemax="4" aria-valuenow="2" aria-valuetext="Golden" aria-label="Turn difficulty knob. Current difficulty: Golden"></button>
-          <div class="knob-guide" id="knobGuide" aria-hidden="true">
-            <svg viewBox="0 0 42 18"><path d="M4 14C10 3 32 3 38 14M4 14l1-7m-1 7 7-1m27 1-1-7m1 7-7-1"/></svg>
-            <span>TURN</span>
-          </div>
-          <button class="front-control" id="frontSound" type="button" data-control="sound" data-label="SOUND" aria-label="Mute sound"></button>
-          <button class="front-control" id="frontHaptics" type="button" data-control="haptics" data-label="HAPTIC" aria-label="Turn haptics off"></button>
-          <button class="front-control" id="frontSettings" type="button" data-control="settings" data-label="SETTINGS" aria-label="Open settings"></button>
-          <button class="front-control" id="frontRanks" type="button" data-control="ranks" data-label="RANKS" aria-label="Open local ranks"></button>
+          <button class="front-control" id="frontSound" type="button" data-control="sound" aria-label="Mute sound"></button>
+          <button class="front-control" id="frontHaptics" type="button" data-control="haptics" aria-label="Turn haptics off"></button>
+          <button class="front-control" id="frontSettings" type="button" data-control="settings" aria-label="Open settings"></button>
+          <button class="front-control" id="frontRanks" type="button" data-control="ranks" aria-label="Open local ranks"></button>
           <div class="button-bank-hitbox" id="buttonBankHitbox" aria-hidden="true"></div>
+          <div class="spread-tray" id="spreadTray">
+            <button class="collection-button" id="collectionButton" type="button" aria-haspopup="dialog">
+              <img id="equippedThumb" alt="" />
+              <span class="equipped-copy"><span id="playerLevel">LV. 01</span><strong id="equippedName">Dry toast</strong><progress id="levelMeter" max="70" value="0" aria-label="Progress to the next toast level"></progress><small id="nextLevel">70 XP to Happy camper</small></span>
+              <span class="collection-link" aria-hidden="true">YOUR TOASTS <b id="collectionCount">1 / 8</b> ↗</span>
+            </button>
+          </div>
         </div>
 
-        <div class="lever-guide" id="leverGuide" aria-hidden="true">
-          <span>DRAG</span>
-          <svg viewBox="0 0 20 34"><path d="M10 2v27m-6-7 6 7 6-7"/></svg>
-        </div>
-        <button class="lever-hitbox" id="leverHitbox" type="button" aria-label="Pull toaster lever down"></button>
+        <button class="lever-hitbox" id="leverHitbox" type="button" aria-label="Pull toaster lever down, or press Enter to start"></button>
 
         <button class="stop-button" id="stopButton" type="button" disabled>
           <span class="stop-icon"></span>
@@ -92,7 +87,9 @@
         <div class="result-card" id="resultCard" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true">
           <span class="result-kicker" id="resultKicker">PERFECT!</span>
           <strong id="resultPoints">+842</strong>
-          <span id="resultTiming">0.08s to spare</span>
+          <span class="result-flavor" id="resultFlavor">+100 XP · toast experience</span>
+          <span class="result-timing" id="resultTiming">0.08s to spare</span>
+          <button class="result-unlock" id="resultUnlock" type="button" aria-haspopup="dialog" hidden></button>
         </div>
       </section>
 
@@ -101,6 +98,27 @@
         <p class="mode-chip" id="modeChip">GOLDEN · 1.0×</p>
         <button class="help-button" id="helpButton" type="button" aria-label="How to play">?</button>
       </footer>
+
+      <dialog class="collection-dialog" id="collectionDialog" aria-labelledby="collectionTitle">
+        <button class="dialog-close" id="collectionClose" type="button" aria-label="Close toast collection">×</button>
+        <p class="eyebrow">SMALL SLICE. BIG POTENTIAL.</p>
+        <h2 id="collectionTitle">Toast, evolved.</h2>
+        <p class="collection-intro">From humble bread to a little work of art.</p>
+        <div class="collection-xp"><span id="collectionLevel">LEVEL 01</span><progress id="collectionLevelMeter" max="70" value="0" aria-label="Toast level progress"></progress><span id="collectionTotalXp">0 XP / 70 XP</span></div>
+        <div class="collection-layout">
+          <div class="collection-detail">
+            <div class="collection-preview-wrap"><canvas id="collectionPreview" role="img" aria-label="Toast finish preview"></canvas><span>MOVE TO CATCH THE LIGHT</span></div>
+            <span class="collection-status" id="collectionStatus">LV. 01 / THE ORIGINAL</span>
+            <h3 id="collectionName">Dry toast</h3>
+            <p class="collection-note" id="collectionNote"></p>
+            <p class="collection-goal" id="collectionGoal"></p>
+            <div class="collection-progress-row"><progress id="collectionProgress" max="1" value="1" aria-label="Progress toward this toast"></progress><span id="collectionProgressText">UNLOCKED</span></div>
+            <button class="collection-equip" id="collectionEquip" type="button">YOUR CURRENT TOAST</button>
+          </div>
+          <div class="collection-list" id="collectionList" aria-label="Toast levels, in order"></div>
+        </div>
+        <p class="collection-footnote">Every slice earns XP. Perfect timing earns more. New levels equip your new toast automatically.</p>
+      </dialog>
 
       <dialog class="help-dialog" id="helpDialog" aria-labelledby="settingsTitle">
         <button class="dialog-close" id="dialogClose" type="button" aria-label="Close">×</button>
@@ -117,9 +135,10 @@
         <h3>How to play</h3>
         <ol>
           <li><strong>Turn</strong> the round knob to set difficulty.</li>
+          <li><strong>Start</strong> with dry toast. Earn XP to unlock painted designs, ceramics, and metals.</li>
           <li><strong>Pull</strong> the side lever down.</li>
           <li><strong>Wait</strong> while the toaster heats up.</li>
-          <li><strong>Tap</strong> as late as you dare—before it pops.</li>
+          <li><strong>Tap</strong> as late as you dare—before it pops. Nail it for bonus XP and your next toast level.</li>
         </ol>
         <button class="dialog-ok" id="dialogOk" type="button">GOT IT</button>
       </dialog>
