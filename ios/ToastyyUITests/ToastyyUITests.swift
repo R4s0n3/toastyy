@@ -3,55 +3,81 @@ import XCTest
 final class ToastyyUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
-    @MainActor
-    func testPlayableRoundAndCollection() throws {
+    private func launch() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing"]
         app.launch()
-        let start = app.buttons["startButton"]
-        XCTAssertTrue(start.waitForExistence(timeout: 20))
-        let enabled = NSPredicate(format: "enabled == true")
-        expectation(for: enabled, evaluatedWith: start)
-        waitForExpectations(timeout: 20)
+        return app
+    }
+
+    /// The lever is a hit area over the 3D handle; it becomes hittable once the loading screen fades.
+    private func waitForLever(_ app: XCUIApplication, timeout: TimeInterval = 20) -> XCUIElement {
+        let lever = app.descendants(matching: .any)["leverControl"]
+        XCTAssertTrue(lever.waitForExistence(timeout: timeout))
+        expectation(for: NSPredicate(format: "hittable == true"), evaluatedWith: lever)
+        waitForExpectations(timeout: timeout)
+        return lever
+    }
+
+    private func attach(_ app: XCUIApplication, _ name: String) {
         let screenshot = XCTAttachment(screenshot: app.screenshot())
-        screenshot.name = "Native toaster — ready"
+        screenshot.name = name
         screenshot.lifetime = .keepAlways
         add(screenshot)
-        start.tap()
-        let stop = app.buttons["stopButton"]
-        XCTAssertTrue(stop.waitForExistence(timeout: 2))
-        stop.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["roundResult"].waitForExistence(timeout: 2))
-        XCTAssertTrue(start.waitForExistence(timeout: 5))
-        app.buttons["collectionButton"].tap()
-        XCTAssertTrue(app.navigationBars["Toast collection"].waitForExistence(timeout: 3))
-        XCTAssertTrue(app.staticTexts["Dry toast"].exists)
-        app.buttons["Done"].tap()
-        XCTAssertTrue(start.waitForExistence(timeout: 3))
     }
 
     @MainActor
-    func testAutomaticBurnAndSettings() throws {
-        let app = XCUIApplication()
-        app.launchArguments = ["--ui-testing"]
-        app.launch()
-        let start = app.buttons["startButton"]
-        XCTAssertTrue(start.waitForExistence(timeout: 20))
-        expectation(for: NSPredicate(format: "enabled == true"), evaluatedWith: start)
-        waitForExpectations(timeout: 20)
-        start.tap()
+    func testPlayableRoundAndCollection() throws {
+        let app = launch()
+        let lever = waitForLever(app)
+        attach(app, "Native toaster — ready")
+        lever.tap()
+        let stop = app.buttons["stopButton"]
+        XCTAssertTrue(stop.waitForExistence(timeout: 2))
+        attach(app, "Native toaster — toasting")
+        stop.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["roundResult"].waitForExistence(timeout: 2))
+        attach(app, "Native toaster — result")
+        _ = waitForLever(app, timeout: 6)
+        app.buttons["collectionButton"].tap()
+        XCTAssertTrue(app.staticTexts["Toast, evolved."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Dry toast"].exists)
+        attach(app, "Native toaster — collection")
+        app.buttons["collectionClose"].tap()
+        _ = waitForLever(app, timeout: 3)
+    }
+
+    @MainActor
+    func testAutomaticBurnSettingsAndRecords() throws {
+        let app = launch()
+        waitForLever(app).tap()
         XCTAssertTrue(app.staticTexts["BURNT"].waitForExistence(timeout: 5))
-        XCTAssertTrue(start.waitForExistence(timeout: 5))
-        app.buttons["Settings"].tap()
-        let sound = app.switches["soundSetting"]
+        attach(app, "Native toaster — burnt")
+        _ = waitForLever(app, timeout: 6)
+
+        app.buttons["helpButton"].tap()
+        let sound = app.buttons["soundSetting"]
         XCTAssertTrue(sound.waitForExistence(timeout: 3))
-        XCTAssertEqual(sound.value as? String, "1")
-        // SwiftUI exposes the full Form row as the switch's accessibility frame.
-        // Tap the trailing switch control, rather than the row's inert center.
-        sound.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
-        expectation(for: NSPredicate(format: "value == '0'"), evaluatedWith: sound)
+        XCTAssertEqual(sound.value as? String, "ON")
+        attach(app, "Native toaster — settings")
+        sound.tap()
+        expectation(for: NSPredicate(format: "value == 'OFF'"), evaluatedWith: sound)
         waitForExpectations(timeout: 3)
-        app.buttons["Done"].tap()
-        XCTAssertTrue(app.buttons["Turn sound on"].waitForExistence(timeout: 3))
+        app.buttons["settingsDone"].tap()
+        _ = waitForLever(app, timeout: 3)
+        XCTAssertEqual(app.buttons["soundControl"].label, "Turn sound on")
+
+        app.buttons["recordsControl"].tap()
+        XCTAssertTrue(app.staticTexts["Cabinet records"].waitForExistence(timeout: 3))
+        attach(app, "Native toaster — records")
+        app.buttons["recordsDone"].tap()
+        _ = waitForLever(app, timeout: 3)
+
+        let knob = app.descendants(matching: .any)["knobControl"]
+        XCTAssertEqual(knob.value as? String, "Golden")
+        knob.tap()
+        expectation(for: NSPredicate(format: "value == 'Crispy'"), evaluatedWith: knob)
+        waitForExpectations(timeout: 3)
+        attach(app, "Native toaster — crispy")
     }
 }

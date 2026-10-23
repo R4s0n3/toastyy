@@ -16,7 +16,7 @@ enum ToastMesh {
     }
 
     @MainActor
-    static func material(skin: ToastSkin, heat: Float, burnt: Bool) -> PhysicallyBasedMaterial {
+    static func material(skin: ToastSkin, heat: Float, burnt: Bool, glow: Bool = false) -> PhysicallyBasedMaterial {
         var material = PhysicallyBasedMaterial()
         let base = UIColor.white
         let shade: CGFloat = burnt ? 0.32 : CGFloat(1 - heat * (skin.id == "dry" ? 0.28 : 0.07))
@@ -26,6 +26,11 @@ enum ToastMesh {
                                    texture: SkinPainter.texture(for: skin).map { .init($0) })
         material.roughness = .init(floatLiteral: skin.roughness)
         material.metallic = .init(floatLiteral: skin.metallic)
+        if glow {
+            // A perfect stop warms the bread, like the web's emissive flash.
+            material.emissiveColor = .init(color: UIColor(hex: 0xff7b20))
+            material.emissiveIntensity = 0.28
+        }
         return material
     }
 }

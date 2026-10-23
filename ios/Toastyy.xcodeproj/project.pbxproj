@@ -20,6 +20,8 @@
 		BCEBF31C78768C0DBD5A3DA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CC4F58382D0806BC17384D /* Assets.xcassets */; };
 		CC76696C58E72B78D1224048 /* Toaster.usdz in Resources */ = {isa = PBXBuildFile; fileRef = D7DB8BFAD0EFF4A65DD0CA8F /* Toaster.usdz */; };
 		DE9AD986174FE93FCD737AD2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E61FF255A795D3F3E853A93 /* GameView.swift */; };
+		A1F0C0DE0000000000000001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0C0DE0000000000000002 /* Theme.swift */; };
+		A1F0C0DE0000000000000003 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = A1F0C0DE0000000000000004 /* Fonts */; };
 		E206DF42770A259FCEC29E5E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FEF9F5DAD4E4657C9B4CE7C1 /* PrivacyInfo.xcprivacy */; };
 		E96CBA3311ED635B8258F8F5 /* ToastyyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FED35871F25613E207D07 /* ToastyyApp.swift */; };
 		F05F6FCF4E002F66932B550E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5908D40B3D251B63B30BFB5D /* Foundation.framework */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		0E61FF255A795D3F3E853A93 /* GameView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		A1F0C0DE0000000000000002 /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A1F0C0DE0000000000000004 /* Fonts */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		1B272EB2CAD5A92751294C27 /* ToastyyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToastyyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		235D280B1CAF08A5EF731DFA /* CollectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		289421576412A8B9E4B4875A /* Feedback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 			children = (
 				235D280B1CAF08A5EF731DFA /* CollectionView.swift */,
 				0E61FF255A795D3F3E853A93 /* GameView.swift */,
+				A1F0C0DE0000000000000002 /* Theme.swift */,
 				6238ED19A972E0727E9752CB /* SettingsView.swift */,
 			);
 			name = Views;
@@ -173,6 +178,7 @@
 				D7DB8BFAD0EFF4A65DD0CA8F /* Toaster.usdz */,
 				FEF9F5DAD4E4657C9B4CE7C1 /* PrivacyInfo.xcprivacy */,
 				E5CC4F58382D0806BC17384D /* Assets.xcassets */,
+				A1F0C0DE0000000000000004 /* Fonts */,
 				9392C12528C9246078D5FC3C /* Toaster.provenance.json */,
 			);
 			name = Resources;
@@ -269,6 +275,7 @@
 				CC76696C58E72B78D1224048 /* Toaster.usdz in Resources */,
 				E206DF42770A259FCEC29E5E /* PrivacyInfo.xcprivacy in Resources */,
 				BCEBF31C78768C0DBD5A3DA2 /* Assets.xcassets in Resources */,
+				A1F0C0DE0000000000000003 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +309,7 @@
 				40874E69BA7FF40338F134D1 /* ToasterView.swift in Sources */,
 				8F09BE86EEBB39A1441C5417 /* CollectionView.swift in Sources */,
 				DE9AD986174FE93FCD737AD2 /* GameView.swift in Sources */,
+				A1F0C0DE0000000000000001 /* Theme.swift in Sources */,
 				14C00FF510B2853C34B527F4 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

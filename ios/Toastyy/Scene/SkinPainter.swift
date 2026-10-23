@@ -108,4 +108,51 @@ enum SkinPainter {
         images[skin.id] = image
         return image
     }
+
+    private static var thumbnails: [String: UIImage] = [:]
+
+    /// Same outline, tilt, shadow and sheen as the web collection thumbnails.
+    static func thumbnail(for skin: ToastSkin) -> UIImage {
+        if let image = thumbnails[skin.id] { return image }
+        let outline = UIBezierPath()
+        outline.move(to: CGPoint(x: 32, y: 149))
+        outline.addQuadCurve(to: CGPoint(x: 20, y: 136), controlPoint: CGPoint(x: 19, y: 150))
+        outline.addLine(to: CGPoint(x: 20, y: 51))
+        outline.addQuadCurve(to: CGPoint(x: 31, y: 22), controlPoint: CGPoint(x: 8, y: 26))
+        outline.addQuadCurve(to: CGPoint(x: 80, y: 20), controlPoint: CGPoint(x: 56, y: 3))
+        outline.addQuadCurve(to: CGPoint(x: 132, y: 24), controlPoint: CGPoint(x: 108, y: 4))
+        outline.addQuadCurve(to: CGPoint(x: 140, y: 52), controlPoint: CGPoint(x: 151, y: 32))
+        outline.addLine(to: CGPoint(x: 140, y: 137))
+        outline.addQuadCurve(to: CGPoint(x: 127, y: 152), controlPoint: CGPoint(x: 140, y: 151))
+        outline.close()
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 2
+        format.opaque = false
+        let crust = skin.id == "dry" ? UIColor(hex: 0xb97637) : UIColor(hex: skin.color)
+        let thumbnail = UIGraphicsImageRenderer(size: CGSize(width: 160, height: 176), format: format).image { renderer in
+            let c = renderer.cgContext
+            c.translateBy(x: 80, y: 88); c.rotate(by: -0.1); c.translateBy(x: -80, y: -88)
+            c.saveGState()
+            c.setShadow(offset: CGSize(width: 0, height: 5), blur: 8, color: UIColor(red: 0x55 / 255, green: 0x44 / 255, blue: 0x2a / 255, alpha: 0x25 / 255).cgColor)
+            c.setFillColor(crust.cgColor)
+            c.addPath(outline.cgPath); c.fillPath()
+            c.restoreGState()
+            c.saveGState()
+            c.addPath(outline.cgPath); c.clip()
+            Self.image(for: skin).draw(in: CGRect(x: 21, y: 22, width: 119, height: 129))
+            if skin.metallic > 0.5 {
+                let stops: [(UInt32, CGFloat, CGFloat)] = [(0xffffff, 0, 0), (0xfffefa, 0x90 / 255, 0.3), (0xffffff, 0x08 / 255, 0.45), (0x584728, 0x38 / 255, 0.8), (0xffffff, 0x44 / 255, 1)]
+                let colors = stops.map { UIColor(hex: $0.0).withAlphaComponent($0.1).cgColor } as CFArray
+                if let sheen = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: stops.map(\.2)) {
+                    c.drawLinearGradient(sheen, start: CGPoint(x: 20, y: 0), end: CGPoint(x: 138, y: 0), options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
+                }
+            }
+            c.setStrokeColor(skin.id == "dry" ? crust.cgColor : UIColor(red: 0x63 / 255, green: 0x54 / 255, blue: 0x4b / 255, alpha: 0x35 / 255).cgColor)
+            c.setLineWidth(7)
+            c.addPath(outline.cgPath); c.strokePath()
+            c.restoreGState()
+        }
+        thumbnails[skin.id] = thumbnail
+        return thumbnail
+    }
 }

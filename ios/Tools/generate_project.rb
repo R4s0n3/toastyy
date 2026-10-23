@@ -26,7 +26,7 @@ group = project.main_group.new_group('Toastyy', 'Toastyy')
 end
 group.new_file('Info.plist')
 resources = group.new_group('Resources', 'Resources')
-%w[Toaster.usdz PrivacyInfo.xcprivacy Assets.xcassets].each do |file|
+%w[Toaster.usdz PrivacyInfo.xcprivacy Assets.xcassets Fonts].each do |file|
   ref = resources.new_file(file)
   app.resources_build_phase.add_file_reference(ref)
 end

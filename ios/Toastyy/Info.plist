@@ -22,5 +22,12 @@
     <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string></array>
     <key>UIUserInterfaceStyle</key><string>Light</string>
     <key>ITSAppUsesNonExemptEncryption</key><false/>
+    <key>UIAppFonts</key>
+    <array>
+        <string>Fonts/Manrope-Medium.ttf</string>
+        <string>Fonts/Manrope-Bold.ttf</string>
+        <string>Fonts/Manrope-ExtraBold.ttf</string>
+        <string>Fonts/DMMono-Medium.ttf</string>
+    </array>
 </dict>
 </plist>
