@@ -23,10 +23,15 @@ No submission has been sent for App Review.
 
 ## Blocking account and website work
 
-- Business currently shows Paid Apps Agreement = New, not signed. Account
-  Holder must complete the agreement and any required tax/banking setup.
-- EU trader status is incomplete. The Account Holder must make the declaration
-  and complete verification for the intended worldwide distribution.
+- Owner explicitly authorized acceptance of the Paid Apps Agreement on
+  2026-10-23. The agreement checkbox was selected and Agree invoked; Apple
+  requires two-factor authentication before completing acceptance. Business
+  still shows New. Complete Apple's authentication and verify the resulting
+  agreement status, then any required tax/banking setup.
+- Owner explicitly authorized EU trader registration. Trader was selected and
+  the existing Apple account address/phone plus legal@miomideal.com entered.
+  Apple's flow reached Verify Email Address; verification and final registration
+  remain incomplete. The agreement authentication is open in a separate tab.
 - Support email legal@miomideal.com and existing Apple review-contact details
   were confirmed by the owner and entered. The working contact page
   https://miomideal.com/legal-notice is the current Support URL.
