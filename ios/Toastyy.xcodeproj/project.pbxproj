@@ -1,0 +1,566 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0F6723B4CE692530FAFC4488 /* SkinPainter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA58DC926388A59C6A516B0F /* SkinPainter.swift */; };
+		14C00FF510B2853C34B527F4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6238ED19A972E0727E9752CB /* SettingsView.swift */; };
+		1E7B92A8B6A15823788EA74A /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F9A3B3D464DFB8F6E8B3E6 /* GameStore.swift */; };
+		23434CD0738C0AEAE880CE21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5908D40B3D251B63B30BFB5D /* Foundation.framework */; };
+		40874E69BA7FF40338F134D1 /* ToasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8998E093CC0BAF67B64002F /* ToasterView.swift */; };
+		77F1F10753CE25CE26AB7D3D /* ToastyyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584717EE172920C3945BE04E /* ToastyyUITests.swift */; };
+		7BC44CF2C326A57E4EF67145 /* ToastMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713A1D11F8B132CF22218106 /* ToastMesh.swift */; };
+		80B5E2D2B306C79AA4BBC020 /* ToastyyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4801FED728344AB64C1DDC52 /* ToastyyCore */; };
+		8D28288BEB304B180C26FD11 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289421576412A8B9E4B4875A /* Feedback.swift */; };
+		8F09BE86EEBB39A1441C5417 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D280B1CAF08A5EF731DFA /* CollectionView.swift */; };
+		BCEBF31C78768C0DBD5A3DA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CC4F58382D0806BC17384D /* Assets.xcassets */; };
+		CC76696C58E72B78D1224048 /* Toaster.usdz in Resources */ = {isa = PBXBuildFile; fileRef = D7DB8BFAD0EFF4A65DD0CA8F /* Toaster.usdz */; };
+		DE9AD986174FE93FCD737AD2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E61FF255A795D3F3E853A93 /* GameView.swift */; };
+		E206DF42770A259FCEC29E5E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FEF9F5DAD4E4657C9B4CE7C1 /* PrivacyInfo.xcprivacy */; };
+		E96CBA3311ED635B8258F8F5 /* ToastyyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FED35871F25613E207D07 /* ToastyyApp.swift */; };
+		F05F6FCF4E002F66932B550E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5908D40B3D251B63B30BFB5D /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3A9D5826AB0A5E235A11B7B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 808ADDF12EFA6067BD9BB371 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C89F4379ECD90B11F7859E6C;
+			remoteInfo = Toastyy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0E61FF255A795D3F3E853A93 /* GameView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		1B272EB2CAD5A92751294C27 /* ToastyyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToastyyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		235D280B1CAF08A5EF731DFA /* CollectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		289421576412A8B9E4B4875A /* Feedback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		3B29C61D3226882E1A1DF848 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3C9FED35871F25613E207D07 /* ToastyyApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastyyApp.swift; sourceTree = "<group>"; };
+		584717EE172920C3945BE04E /* ToastyyUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastyyUITests.swift; sourceTree = "<group>"; };
+		5908D40B3D251B63B30BFB5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6238ED19A972E0727E9752CB /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		713A1D11F8B132CF22218106 /* ToastMesh.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastMesh.swift; sourceTree = "<group>"; };
+		88F9A3B3D464DFB8F6E8B3E6 /* GameStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
+		9392C12528C9246078D5FC3C /* Toaster.provenance.json */ = {isa = PBXFileReference; includeInIndex = 1; path = Toaster.provenance.json; sourceTree = "<group>"; };
+		D7DB8BFAD0EFF4A65DD0CA8F /* Toaster.usdz */ = {isa = PBXFileReference; includeInIndex = 1; path = Toaster.usdz; sourceTree = "<group>"; };
+		E5CC4F58382D0806BC17384D /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E8998E093CC0BAF67B64002F /* ToasterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToasterView.swift; sourceTree = "<group>"; };
+		EA58DC926388A59C6A516B0F /* SkinPainter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SkinPainter.swift; sourceTree = "<group>"; };
+		FEF9F5DAD4E4657C9B4CE7C1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FF225134233507896388FE00 /* Toastyy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toastyy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1BBDE1B4C188572C6E7523C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F05F6FCF4E002F66932B550E /* Foundation.framework in Frameworks */,
+				80B5E2D2B306C79AA4BBC020 /* ToastyyCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87635BBC35162395344B3B21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23434CD0738C0AEAE880CE21 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41BBEE9BA47821678E4683DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C6CEBF9BA3069C5A472E9DA /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4C6CEBF9BA3069C5A472E9DA /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5908D40B3D251B63B30BFB5D /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		563A7F10176AD09B798BB245 = {
+			isa = PBXGroup;
+			children = (
+				DBA3A229403C29709A1C4F35 /* Products */,
+				41BBEE9BA47821678E4683DA /* Frameworks */,
+				9F8D3C8B2D00FF9D6202F10C /* Toastyy */,
+				C7CA2BE2A891C52AA2B85314 /* ToastyyUITests */,
+			);
+			sourceTree = "<group>";
+		};
+		7C5320CB1C6EBBDD5DECAEF9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				235D280B1CAF08A5EF731DFA /* CollectionView.swift */,
+				0E61FF255A795D3F3E853A93 /* GameView.swift */,
+				6238ED19A972E0727E9752CB /* SettingsView.swift */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7E71D61B48296CBA8294F763 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				EA58DC926388A59C6A516B0F /* SkinPainter.swift */,
+				713A1D11F8B132CF22218106 /* ToastMesh.swift */,
+				E8998E093CC0BAF67B64002F /* ToasterView.swift */,
+			);
+			name = Scene;
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		9F8D3C8B2D00FF9D6202F10C /* Toastyy */ = {
+			isa = PBXGroup;
+			children = (
+				B94A09411FF1DBAF351A40FD /* App */,
+				7E71D61B48296CBA8294F763 /* Scene */,
+				7C5320CB1C6EBBDD5DECAEF9 /* Views */,
+				3B29C61D3226882E1A1DF848 /* Info.plist */,
+				EF551978BA59EEAC2E5941FB /* Resources */,
+			);
+			name = Toastyy;
+			path = Toastyy;
+			sourceTree = "<group>";
+		};
+		B94A09411FF1DBAF351A40FD /* App */ = {
+			isa = PBXGroup;
+			children = (
+				289421576412A8B9E4B4875A /* Feedback.swift */,
+				88F9A3B3D464DFB8F6E8B3E6 /* GameStore.swift */,
+				3C9FED35871F25613E207D07 /* ToastyyApp.swift */,
+			);
+			name = App;
+			path = App;
+			sourceTree = "<group>";
+		};
+		C7CA2BE2A891C52AA2B85314 /* ToastyyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				584717EE172920C3945BE04E /* ToastyyUITests.swift */,
+			);
+			name = ToastyyUITests;
+			path = ToastyyUITests;
+			sourceTree = "<group>";
+		};
+		DBA3A229403C29709A1C4F35 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF225134233507896388FE00 /* Toastyy.app */,
+				1B272EB2CAD5A92751294C27 /* ToastyyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF551978BA59EEAC2E5941FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D7DB8BFAD0EFF4A65DD0CA8F /* Toaster.usdz */,
+				FEF9F5DAD4E4657C9B4CE7C1 /* PrivacyInfo.xcprivacy */,
+				E5CC4F58382D0806BC17384D /* Assets.xcassets */,
+				9392C12528C9246078D5FC3C /* Toaster.provenance.json */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		015A0C4467797A276FE8ACB4 /* ToastyyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8E83D80C2771CAEF3EC2FF0 /* Build configuration list for PBXNativeTarget "ToastyyUITests" */;
+			buildPhases = (
+				1D07DF8BDFE8E184E0F6CDBC /* Sources */,
+				87635BBC35162395344B3B21 /* Frameworks */,
+				597DBED79DE0B74C3FE7EDF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				32F0B942D803289843AC13E9 /* PBXTargetDependency */,
+			);
+			name = ToastyyUITests;
+			productName = ToastyyUITests;
+			productReference = 1B272EB2CAD5A92751294C27 /* ToastyyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		C89F4379ECD90B11F7859E6C /* Toastyy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 325E665841ACC5D788E480FD /* Build configuration list for PBXNativeTarget "Toastyy" */;
+			buildPhases = (
+				8FD588F028EE5D62C70B9FEC /* Sources */,
+				1BBDE1B4C188572C6E7523C6 /* Frameworks */,
+				1D842551A7159CF44C725B15 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Toastyy;
+			packageProductDependencies = (
+				4801FED728344AB64C1DDC52 /* ToastyyCore */,
+			);
+			productName = Toastyy;
+			productReference = FF225134233507896388FE00 /* Toastyy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		808ADDF12EFA6067BD9BB371 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					015A0C4467797A276FE8ACB4 = {
+						TestTargetID = C89F4379ECD90B11F7859E6C;
+					};
+					C89F4379ECD90B11F7859E6C = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 4922DBF7D634990E6C2F858A /* Build configuration list for PBXProject "Toastyy" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 563A7F10176AD09B798BB245;
+			minimizedProjectReferenceProxies = 0;
+			packageReferences = (
+				7C6956F7CB796575D37CE9F1 /* XCLocalSwiftPackageReference "." */,
+			);
+			preferredProjectObjectVersion = 100;
+			productRefGroup = DBA3A229403C29709A1C4F35 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C89F4379ECD90B11F7859E6C /* Toastyy */,
+				015A0C4467797A276FE8ACB4 /* ToastyyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D842551A7159CF44C725B15 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC76696C58E72B78D1224048 /* Toaster.usdz in Resources */,
+				E206DF42770A259FCEC29E5E /* PrivacyInfo.xcprivacy in Resources */,
+				BCEBF31C78768C0DBD5A3DA2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		597DBED79DE0B74C3FE7EDF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D07DF8BDFE8E184E0F6CDBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77F1F10753CE25CE26AB7D3D /* ToastyyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8FD588F028EE5D62C70B9FEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D28288BEB304B180C26FD11 /* Feedback.swift in Sources */,
+				1E7B92A8B6A15823788EA74A /* GameStore.swift in Sources */,
+				E96CBA3311ED635B8258F8F5 /* ToastyyApp.swift in Sources */,
+				0F6723B4CE692530FAFC4488 /* SkinPainter.swift in Sources */,
+				7BC44CF2C326A57E4EF67145 /* ToastMesh.swift in Sources */,
+				40874E69BA7FF40338F134D1 /* ToasterView.swift in Sources */,
+				8F09BE86EEBB39A1441C5417 /* CollectionView.swift in Sources */,
+				DE9AD986174FE93FCD737AD2 /* GameView.swift in Sources */,
+				14C00FF510B2853C34B527F4 /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		32F0B942D803289843AC13E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Toastyy;
+			target = C89F4379ECD90B11F7859E6C /* Toastyy */;
+			targetProxy = C3A9D5826AB0A5E235A11B7B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1332725820DD2CB621160C33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		16510B9CEE60B6FD525C7B3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toastyy.app.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Toastyy;
+			};
+			name = Debug;
+		};
+		204B4A599D32CB867654D154 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toastyy.app.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Toastyy;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E32FEE8E5556B2053174E48A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Toastyy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toastyy.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E8F40C06D7461F1C61670B7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Toastyy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toastyy.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F1E8AFB02B0BFF88BB880BA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		325E665841ACC5D788E480FD /* Build configuration list for PBXNativeTarget "Toastyy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E32FEE8E5556B2053174E48A /* Release */,
+				E8F40C06D7461F1C61670B7E /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4922DBF7D634990E6C2F858A /* Build configuration list for PBXProject "Toastyy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1332725820DD2CB621160C33 /* Debug */,
+				F1E8AFB02B0BFF88BB880BA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8E83D80C2771CAEF3EC2FF0 /* Build configuration list for PBXNativeTarget "ToastyyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				204B4A599D32CB867654D154 /* Release */,
+				16510B9CEE60B6FD525C7B3D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		7C6956F7CB796575D37CE9F1 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4801FED728344AB64C1DDC52 /* ToastyyCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C6956F7CB796575D37CE9F1 /* XCLocalSwiftPackageReference "." */;
+			productName = ToastyyCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 808ADDF12EFA6067BD9BB371 /* Project object */;
+}

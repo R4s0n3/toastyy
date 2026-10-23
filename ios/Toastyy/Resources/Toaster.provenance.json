@@ -1,0 +1,9 @@
+{
+  "source": "toaster.glb",
+  "webCommit": "fd5b6a332b9eb4cb22b0d4480835119a35bb7294",
+  "sourceSHA256": "bcc9642069f0c00276d4f982d44127f53ac7866f87dc7ff191ff94060384261c",
+  "triangles": 33136,
+  "metersPerUnit": 1,
+  "upAxis": "Y",
+  "conversion": "Original geometry and normals; centered pivots; split moving lever insert; USD Preview Surface materials."
+}

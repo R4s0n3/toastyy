@@ -1,0 +1,54 @@
+name: Native iOS
+
+on:
+  push:
+    paths: ['ios/**', '.github/workflows/ios.yml']
+  pull_request:
+    paths: ['ios/**', '.github/workflows/ios.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show selected Xcode
+        run: xcodebuild -version
+      - name: Test gameplay rules
+        working-directory: ios
+        run: swift test
+      - name: Build native app for iOS Simulator
+        working-directory: ios
+        run: >-
+          xcodebuild -project Toastyy.xcodeproj -scheme Toastyy
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
+      - name: Select available iPhone simulator
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          devices = json.loads(subprocess.check_output(['xcrun', 'simctl', 'list', 'devices', 'available', '--json']))['devices']
+          phones = [device for runtime, items in devices.items() if 'iOS' in runtime for device in items if device['name'].startswith('iPhone')]
+          if not phones:
+              raise SystemExit('No available iPhone simulator. Install an iOS runtime in Xcode.')
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('TOASTYY_SIMULATOR=' + phones[0]['udid'] + '\n')
+          PY
+      - name: Test playable round and native screens
+        working-directory: ios
+        run: >-
+          xcodebuild -project Toastyy.xcodeproj -scheme Toastyy
+          -destination "platform=iOS Simulator,id=$TOASTYY_SIMULATOR"
+          -derivedDataPath DerivedData -resultBundlePath TestResults.xcresult
+          CODE_SIGNING_ALLOWED=NO test
+      - name: Upload simulator results and screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-ios-test-results
+          path: ios/TestResults.xcresult
+          if-no-files-found: ignore
