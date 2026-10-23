@@ -47,8 +47,10 @@ final class GameStore: ObservableObject {
     @Published var sceneError: String?
     @Published var sceneReady = false
     let feedback = Feedback()
+    let monetization = Monetization()
     private let defaults: UserDefaults
     private var active = true
+    private var foreground = true
     private var previousFrame: Double?
     private var nextTick = 0.0
     private var dangerBuzzed = false
@@ -82,6 +84,10 @@ final class GameStore: ObservableObject {
         feedback.muted = muted
         feedback.haptics = haptics
         collectionFocus = game.progression.skin.id
+        monetization.onPresentationChanged = { [weak self] showing in
+            guard let self else { return }
+            self.setActive(self.foreground)
+        }
     }
 
     func start() {
@@ -215,6 +221,7 @@ final class GameStore: ObservableObject {
 
     private func didFinish() {
         guard let result = game.result else { return }
+        monetization.completedRound()
         resultAge = 0
         lever = 0
         heat = result.heat
@@ -236,15 +243,19 @@ final class GameStore: ObservableObject {
 
     func nextRound() {
         guard game.phase == .result else { return }
+        let afterBurn = game.result?.rating == .miss
         game.nextRound()
         heat = 0
         danger = 0
         resultAge = 0
         newBest = false
         if game.score == 0 { scoreAnimation = nil; displayScore = 0 }
+        if active, dialog == nil { monetization.presentAfterRun(afterBurn: afterBurn) }
     }
 
-    func setActive(_ value: Bool) {
+    func setActive(_ requested: Bool) {
+        foreground = requested
+        let value = requested && !monetization.isPresenting
         guard active != value else { return }
         active = value
         let now = ProcessInfo.processInfo.systemUptime

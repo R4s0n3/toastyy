@@ -30,6 +30,7 @@ struct GameView: View {
         .foregroundStyle(Palette.ink)
         .onChange(of: store.sceneReady) { _, ready in
             guard ready else { return }
+            Task { await store.monetization.start() }
             Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(260))
                 withAnimation(.easeInOut(duration: 0.45)) { loadingVisible = false }
@@ -375,7 +376,7 @@ struct GameView: View {
             }
             Group {
                 switch store.dialog {
-                case .settings: SettingsDialog(store: store, width: min(width * 0.88, 380)).transition(.dialog)
+                case .settings: SettingsDialog(store: store, monetization: store.monetization, width: min(width * 0.88, 380)).transition(.dialog)
                 case .records: RecordsDialog(store: store, width: min(width * 0.88, 380)).transition(.dialog)
                 case .collection: CollectionDialog(store: store, width: min(width * 0.94, 420)).transition(.dialog)
                 case nil: EmptyView()

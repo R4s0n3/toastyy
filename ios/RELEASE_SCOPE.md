@@ -19,3 +19,9 @@ and haptics. Ads and purchases are not implemented in this build. They require
 an ad-network account and production app/ad-unit configuration, consent and
 privacy setup, and an App Store Connect non-consumable product before testing
 and release.
+
+## TestFlight 1.0.0 (3)
+
+Adds AdMob/UMP integration with test ads only, a privacy link, and StoreKit
+Remove Ads purchase/restoration. See ADVERTISING.md for account-side setup,
+physical-device verification, and production release gates.

@@ -3,6 +3,7 @@ import SwiftUI
 /// The web's "Toaster settings" dialog, including its how-to-play list.
 struct SettingsDialog: View {
     @ObservedObject var store: GameStore
+    @ObservedObject var monetization: Monetization
     let width: CGFloat
     private let steps: [(String, String)] = [
         ("Turn", " the round knob to set difficulty."),
@@ -28,6 +29,33 @@ struct SettingsDialog: View {
                     settingRow("Sound", on: !store.muted, identifier: "soundSetting", action: store.toggleSound)
                     settingRow("Haptics", on: store.haptics, identifier: "hapticsSetting", action: store.toggleHaptics)
                 }
+                VStack(alignment: .leading, spacing: 10) {
+                    if monetization.adsRemoved {
+                        Text("AD-FREE · THANK YOU").font(Typeface.mono(10))
+                    } else {
+                        Button(monetization.product.map { "REMOVE ADS · \($0.displayPrice)" } ?? "REMOVE ADS") {
+                            Task { await monetization.purchase() }
+                        }
+                        .disabled(monetization.busy)
+                        .accessibilityIdentifier("removeAds")
+                        Text("One purchase. No ads. Forever.")
+                            .font(Typeface.sans(10, .medium))
+                    }
+                    Button("Restore Purchases") { Task { await monetization.restore() } }
+                        .disabled(monetization.busy)
+                        .accessibilityIdentifier("restorePurchases")
+                    Link("Privacy Policy", destination: Monetization.privacyURL)
+                    if monetization.privacyOptionsRequired {
+                        Button("Advertising Privacy Choices") { Task { await monetization.privacyOptions() } }
+                    }
+                    if let message = monetization.message {
+                        Text(message).font(Typeface.sans(11, .medium)).fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("purchaseMessage")
+                    }
+                }
+                .font(Typeface.sans(12, .bold))
+                .foregroundStyle(Palette.ink)
+                .padding(.top, 18)
                 Text("How to play")
                     .font(Typeface.sans(12, .bold)).tracking(em: 0.04, size: 12)
                     .padding(.top, 24).padding(.bottom, 8)

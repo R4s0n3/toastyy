@@ -200,3 +200,18 @@ func referenceTimingAndPoints(sample: (Double, Rating, Int)) {
     }
     #expect(Progression(xp: 1_000_000, equipped: "prism").skin.id == "prism")
 }
+
+@Test func adsWaitForBurnedRunAndRespectFrequencyCap() {
+    var policy = AdBreakPolicy(now: 10)
+    for _ in 0..<5 { policy.completedRound() }
+    #expect(!policy.isEligible(afterBurn: true, now: 500))
+    policy.completedRound()
+    #expect(!policy.isEligible(afterBurn: false, now: 500))
+    #expect(!policy.isEligible(afterBurn: true, now: 129))
+    #expect(policy.isEligible(afterBurn: true, now: 130))
+    policy.didPresent(now: 130)
+    #expect(!policy.isEligible(afterBurn: true, now: 500))
+    for _ in 0..<6 { policy.completedRound() }
+    #expect(!policy.isEligible(afterBurn: true, now: 249))
+    #expect(policy.isEligible(afterBurn: true, now: 250))
+}

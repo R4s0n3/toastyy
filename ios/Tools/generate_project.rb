@@ -46,6 +46,18 @@ link = project.new(Xcodeproj::Project::Object::PBXBuildFile)
 link.product_ref = product
 app.frameworks_build_phase.files << link
 
+ads_package = project.new(Xcodeproj::Project::Object::XCRemoteSwiftPackageReference)
+ads_package.repositoryURL = 'https://github.com/googleads/swift-package-manager-google-mobile-ads.git'
+ads_package.requirement = {'kind' => 'exactVersion', 'version' => '13.11.0'}
+project.root_object.package_references << ads_package
+ads_product = project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
+ads_product.package = ads_package
+ads_product.product_name = 'GoogleMobileAds'
+app.package_product_dependencies << ads_product
+ads_link = project.new(Xcodeproj::Project::Object::PBXBuildFile)
+ads_link.product_ref = ads_product
+app.frameworks_build_phase.files << ads_link
+
 project.build_configurations.each do |config|
   config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '17.0'
   config.build_settings['SWIFT_VERSION'] = '5.0'
@@ -58,14 +70,16 @@ app.build_configurations.each do |config|
     'INFOPLIST_FILE' => 'Toastyy/Info.plist',
     'GENERATE_INFOPLIST_FILE' => 'NO',
     'MARKETING_VERSION' => '1.0.0',
-    'CURRENT_PROJECT_VERSION' => '2',
+    'CURRENT_PROJECT_VERSION' => '3',
     'CODE_SIGN_STYLE' => 'Automatic',
+    'DEVELOPMENT_TEAM' => '9XGAA62775',
     'TARGETED_DEVICE_FAMILY' => '1',
     'SUPPORTS_MACCATALYST' => 'NO',
     'SUPPORTED_PLATFORMS' => 'iphoneos iphonesimulator',
     'ASSETCATALOG_COMPILER_APPICON_NAME' => 'AppIcon',
     'ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME' => 'AccentColor',
     'SWIFT_EMIT_LOC_STRINGS' => 'YES',
+    'OTHER_LDFLAGS' => '$(inherited) -ObjC',
     'SWIFT_STRICT_CONCURRENCY' => 'targeted'
   })
 end
