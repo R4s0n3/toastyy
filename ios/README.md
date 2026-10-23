@@ -15,6 +15,10 @@ asset download.
    target's **Signing & Capabilities** and choose a unique bundle identifier.
    The minimum supported version is iOS 17. The app runs in portrait.
 
+For TestFlight distribution, use **Xcode 26 or newer** and follow the
+[first-upload guide](TESTFLIGHT.md). Local development can use older supported
+Xcode versions; Apple's current upload requirements are stricter.
+
 The only package is the local `ToastyyCore` package. There are no external Swift
 dependencies. Camera permission is unnecessary: the scene uses RealityKit's
 [non-AR camera mode](https://developer.apple.com/documentation/realitykit/perspectivecamera).
@@ -68,10 +72,10 @@ burns, the collection, and sound settings; the first test saves a screenshot in
 the result bundle. The workflow selects an available iPhone automatically.
 
 `swift test` also runs on Linux with Swift 6.0 or newer. It validates the portable
-rules, not SwiftUI or RealityKit. The first implementation was created on Linux:
-the core tests and Swift syntax checks passed there, but the Xcode build and
-simulator tests have **not yet run**. The workflow is configured, not a claimed
-successful CI run.
+rules, not SwiftUI or RealityKit. The first implementation was created on Linux.
+The initial Mac CI run has since successfully compiled the iOS Simulator app;
+check the **Native iOS** Actions run for the separate UI-test outcome. A
+successful simulator build does not validate device signing or distribution.
 
 Before treating the port as device-verified, run the Xcode build and UI tests,
 then check framing on small and large iPhones, the physical knob and lever hit
