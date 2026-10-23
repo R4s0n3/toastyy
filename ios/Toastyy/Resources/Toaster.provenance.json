@@ -5,5 +5,8 @@
   "triangles": 33136,
   "metersPerUnit": 1,
   "upAxis": "Y",
-  "conversion": "Original geometry and normals; centered pivots; split moving lever insert; USD Preview Surface materials."
+  "conversion": "Original geometry and normals; centered pivots; split moving lever insert; USD Preview Surface materials.",
+  "assetSource": "Adobe Substance 3D free asset library (confirmed by project owner, 2026-10-23)",
+  "licenseReference": "https://www.adobe.com/products/substance3d/assets.html",
+  "usage": "Incorporated into the Toastyy game; not offered as a standalone asset download."
 }
