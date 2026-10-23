@@ -284,6 +284,7 @@ struct GameView: View {
         }
         .buttonStyle(StopButtonStyle(urgent: store.danger > 0.22 && !reducedMotion))
         .accessibilityIdentifier("stopButton")
+        .accessibilityHidden(!visible)
         .disabled(!visible)
         .opacity(visible ? 1 : 0)
         .offset(y: visible ? 0 : 98)
@@ -332,14 +333,14 @@ struct GameView: View {
             .accessibilityLabel("Streak")
             .accessibilityValue("\(streak)")
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text("\(store.game.difficulty.title) · \(String(format: "%.1f×", store.game.difficulty.multiplier))")
+            Text("\(store.game.difficulty.title) · \(store.game.difficulty.multiplierText)×")
                 .font(Typeface.mono(9)).tracking(em: 0.04, size: 9)
                 .foregroundStyle(Color(hex: 0x675f53))
                 .padding(.horizontal, 9).padding(.vertical, 5)
                 .background(Color.white.opacity(0.22), in: Capsule())
                 .overlay(Capsule().stroke(Color(hex: 0x28251f, opacity: 0.1), lineWidth: 1))
                 .fixedSize()
-                .accessibilityLabel("\(store.game.difficulty.title.capitalized) difficulty, \(String(format: "%.1f", store.game.difficulty.multiplier)) times points")
+                .accessibilityLabel("\(store.game.difficulty.title.capitalized) difficulty, \(store.game.difficulty.multiplierText) times points")
             Button(action: store.openSettings) {
                 Text("?").font(Typeface.mono(15))
                     .frame(width: 34, height: 34)
@@ -939,4 +940,9 @@ private struct LoadingScreen: View {
         .onChange(of: ready) { _, value in if value { withAnimation(.easeOut(duration: 0.22)) { progress = 1 } } }
         .onChange(of: error) { _, value in if value != nil { withAnimation(.easeOut(duration: 0.22)) { progress = 1 } } }
     }
+}
+
+extension Difficulty {
+    /// One decimal, rounded half up like the web's `toFixed(1)` (Crispy reads 1.3).
+    var multiplierText: String { String(format: "%.1f", (multiplier * 10).rounded() / 10) }
 }

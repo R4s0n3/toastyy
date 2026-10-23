@@ -70,6 +70,8 @@ struct ToasterView: UIViewRepresentable {
         private let knobCenter = SIMD3<Float>(-0.13, 0.03694, 0)
         private let buttonPoints: [SIMD3<Float>] = [0.1141, 0.0988, 0.0835, 0.0682].map { [-0.1161, $0, -0.0379] }
         private let knobAngles: [Float] = [-0.86, -0.29, 0.29, 0.86]
+        /// The printed region of the front cover, trimmed to the ink so it stays clear of the curved edges.
+        private let markingArea = (width: CGFloat(0.104), height: CGFloat(0.13), top: CGFloat(0.16))
 
         init(store: GameStore) { self.store = store }
 
@@ -205,6 +207,7 @@ struct ToasterView: UIViewRepresentable {
             material.blending = .transparent(opacity: .init(floatLiteral: 0.52))
             let shadow = ModelEntity(mesh: .generatePlane(width: 0.46, depth: 0.25), materials: [material])
             shadow.position = [0, 0.0015, 0.012]
+            if #available(iOS 18.0, *) { shadow.components.set(DynamicLightShadowComponent(castsShadow: false)) }
             stage.addChild(shadow)
         }
 
@@ -215,7 +218,7 @@ struct ToasterView: UIViewRepresentable {
             for z in ToastMotion.slotCenters {
                 let slice = Entity()
                 slice.position = [0, ToastMotion.baseY, z]
-                let outer = ModelEntity(mesh: crust, materials: [SimpleMaterial(color: UIColor(hex: 0xb97637), roughness: 0.86, isMetallic: false)])
+                let outer = ModelEntity(mesh: crust, materials: [SimpleMaterial(color: UIColor(hex: 0xc4924c), roughness: 0.86, isMetallic: false)])
                 let inner = ModelEntity(mesh: crumb, materials: [ToastMesh.material(skin: store.game.progression.skin, heat: 0, burnt: false)])
                 slice.addChild(outer)
                 slice.addChild(inner)
@@ -237,10 +240,11 @@ struct ToasterView: UIViewRepresentable {
 
         private func addMarkings() {
             guard let toaster else { return }
-            let plane = ModelEntity(mesh: .generatePlane(width: 0.112, height: 0.154), materials: [])
+            let plane = ModelEntity(mesh: .generatePlane(width: Float(markingArea.width), height: Float(markingArea.height)), materials: [])
             // The plane faces +Z; turn it to the model's negative-X front, like the web decal.
             plane.orientation = simd_quatf(angle: -.pi / 2, axis: [0, 1, 0])
-            plane.position = [-0.1144, 0.09, 0]
+            plane.position = [-0.1144, Float(markingArea.top - markingArea.height / 2), 0]
+            if #available(iOS 18.0, *) { plane.components.set(DynamicLightShadowComponent(castsShadow: false)) }
             toaster.addChild(plane)
             markings = plane
             if let knob {
@@ -258,15 +262,15 @@ struct ToasterView: UIViewRepresentable {
             guard let markings, key != markingsKey else { return }
             markingsKey = key
             let width: CGFloat = 1024
-            let scale = width / 0.112
-            let x = { (z: CGFloat) in (z + 0.056) * scale }
-            let y = { (height: CGFloat) in (0.167 - height) * scale }
+            let scale = width / markingArea.width
+            let x = { (z: CGFloat) in (z + markingArea.width / 2) * scale }
+            let y = { (height: CGFloat) in (markingArea.top - height) * scale }
             let ink = UIColor(hex: 0x474337)
             let accent = UIColor(hex: 0x9e5e2e)
             let format = UIGraphicsImageRendererFormat()
             format.scale = 1
             format.opaque = false
-            let image = UIGraphicsImageRenderer(size: CGSize(width: width, height: 1408), format: format).image { renderer in
+            let image = UIGraphicsImageRenderer(size: CGSize(width: width, height: (markingArea.height * scale).rounded()), format: format).image { renderer in
                 let c = renderer.cgContext
                 func print(_ label: String, _ z: CGFloat, _ height: CGFloat, size: CGFloat = 0.003, color: UIColor? = nil, spacing: CGFloat = 0.00035) {
                     let font = UIFont(name: "DMMono-Medium", size: size * scale) ?? .monospacedSystemFont(ofSize: size * scale, weight: .medium)

@@ -32,9 +32,9 @@ final class ToastyyUITests: XCTestCase {
         let lever = waitForLever(app)
         attach(app, "Native toaster — ready")
         lever.tap()
+        // A Golden round lasts 2.8 s under UI testing, so stop first and capture the toasting state in the burn test.
         let stop = app.buttons["stopButton"]
         XCTAssertTrue(stop.waitForExistence(timeout: 2))
-        attach(app, "Native toaster — toasting")
         stop.tap()
         XCTAssertTrue(app.descendants(matching: .any)["roundResult"].waitForExistence(timeout: 2))
         attach(app, "Native toaster — result")
@@ -51,6 +51,8 @@ final class ToastyyUITests: XCTestCase {
     func testAutomaticBurnSettingsAndRecords() throws {
         let app = launch()
         waitForLever(app).tap()
+        XCTAssertTrue(app.buttons["stopButton"].waitForExistence(timeout: 2))
+        attach(app, "Native toaster — toasting")
         XCTAssertTrue(app.staticTexts["BURNT"].waitForExistence(timeout: 5))
         attach(app, "Native toaster — burnt")
         _ = waitForLever(app, timeout: 6)
