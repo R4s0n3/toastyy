@@ -25,29 +25,39 @@ dependencies. Camera permission is unnecessary: the scene uses RealityKit's
 
 ## Play
 
-- Turn the 3D knob, drag it horizontally, or use the four difficulty buttons.
-- Drag the physical lever down, tap it, or use **Pull to Start**.
-- Tap the 3D scene or **Stop Toaster** just before the pop. The last 150 ms is a
-  perfect save. Missing ends the run; permanent records and XP remain.
-- The four cabinet buttons toggle sound, haptics, settings, and records.
-  Equivalent labeled controls are available through the native interface.
-- Open the collection to equip unlocked toast. New levels automatically equip
-  their new finish, matching the web client.
+The screen mirrors the web client one to one; there are no extra native-only buttons.
+
+- Tap the 3D knob or drag it horizontally to set difficulty.
+- Drag the physical lever down, or tap it, to start.
+- Touch anywhere on the stage, or **Stop Toaster**, just before the pop. The last
+  150 ms is a perfect save. Missing ends the run; permanent records and XP remain.
+- The four cabinet buttons toggle sound and haptics and open settings and records.
+  The **?** button opens settings and how to play.
+- Open the tray under the toaster to see and equip unlocked toast. New levels
+  automatically equip their new finish, matching the web client.
 
 ## Implemented
 
 - Original toaster geometry, dimensions, and normals converted to bundled USDZ.
-- Non-AR perspective camera, warm lighting, floor shadows, heater glow,
-  centered knob rotation, linked lever handle and inset, shaped bread, and crumbs.
+- Web look and layout: bundled Manrope and DM Mono (SIL OFL, licenses in
+  `Resources/Fonts`), the web color tokens, paper grain, transparent 3D stage,
+  the web camera framing between the copy and the tray, printed housing legends,
+  browning dial, and indicator lights.
+- Non-AR perspective camera, warm lighting, contact shadow, heater glow,
+  knob detents, linked lever handle and inset, shaped bread, and crumbs.
+- Web feedback: status pill, heat meter, steam, heat aura, danger vignette,
+  stop-key urgency, result card with perfect and new-best badges, score count-up,
+  flying points, streak badge, burn shake and flashes, and the loading screen.
 - Four difficulty ranges and multipliers, accelerating rounds, timing grades,
   cumulative run scores, streak bonuses, best records, and automatic cooldowns.
 - Eight toast finishes with native procedural textures and PBR materials, matching
   web XP thresholds and rewards. The patterns are native redraws, not exact
   pixel copies of the web canvas textures.
-- Native collection, settings, records, help, local persistence, synthesized
-  audio, haptics, and foreground interruption handling.
-- Accessible start/stop and difficulty controls, VoiceOver labels, and reduced
-  motion support for the presentation and toast pop.
+- Web-style collection, settings, records and help dialogs, local persistence,
+  synthesized audio, haptics, and foreground interruption handling.
+- The physical controls are SwiftUI hit areas over their projected 3D positions,
+  so VoiceOver can use the lever, the adjustable knob, and the cabinet buttons.
+  Reduced motion is respected.
 - App icon, launch background, required-reason privacy manifest, shared scheme,
   gameplay tests, UI smoke tests, and a GitHub Actions Mac build/test workflow.
 
@@ -68,8 +78,8 @@ xcodebuild -project Toastyy.xcodeproj -scheme Toastyy \
 Replace the simulator name with an installed device from `xcrun simctl list`.
 The UI tests launch with isolated, non-persisted records and fixed random timing.
 They exercise loading the actual USDZ, starting and stopping a round, automatic
-burns, the collection, and sound settings; the first test saves a screenshot in
-the result bundle. The workflow selects an available iPhone automatically.
+burns, the collection, sound settings, records, and the knob, and save screenshots
+of each screen in the result bundle. The workflow selects an available iPhone automatically.
 
 `swift test` also runs on Linux with Swift 6.0 or newer. It validates the portable
 rules, not SwiftUI or RealityKit. The first implementation was created on Linux.
@@ -80,8 +90,9 @@ successful simulator build does not validate device signing or distribution.
 Before treating the port as device-verified, run the Xcode build and UI tests,
 then check framing on small and large iPhones, the physical knob and lever hit
 areas, audio and haptics on hardware, app switching, and metallic finishes.
-Visual polish still needed for exact web parity includes the projected housing
-legends, smoke and steam, grill marks, and the full web result effects.
+Remaining differences from the web: the 3D steam, smoke and sparkle particles,
+grill marks, the cabinet buttons' press travel, and the collection preview, which
+tilts a 2D slice instead of rendering a 3D one.
 Web localStorage saves are not imported; native progress starts fresh. Signing,
 App Store metadata, and distribution have not been configured.
 
@@ -92,8 +103,8 @@ App Store metadata, and distribution have not been configured.
 - `Toastyy/App`: SwiftUI entry, observable state, versioned UserDefaults save,
   synthesized audio, and UIKit haptics.
 - `Toastyy/Scene`: RealityKit view, native bread meshes, texture painting, camera,
-  lighting, and direct 3D interaction.
-- `Toastyy/Views`: native game, collection, settings/help, and records screens.
+  lighting, housing print, and projected control positions.
+- `Toastyy/Views`: game screen, dialogs, and the shared theme (`Theme.swift`).
 - `Toastyy/Resources`: original converted toaster, provenance, assets, and privacy.
 
 ## Asset maintenance

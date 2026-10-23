@@ -261,16 +261,17 @@ struct ToasterView: UIViewRepresentable {
             let key = "\(store.muted)-\(store.haptics)-\(store.game.difficulty.rawValue)"
             guard let markings, key != markingsKey else { return }
             markingsKey = key
+            let area = markingArea
             let width: CGFloat = 1024
-            let scale = width / markingArea.width
-            let x = { (z: CGFloat) in (z + markingArea.width / 2) * scale }
-            let y = { (height: CGFloat) in (markingArea.top - height) * scale }
+            let scale = width / area.width
+            let x = { (z: CGFloat) in (z + area.width / 2) * scale }
+            let y = { (height: CGFloat) in (area.top - height) * scale }
             let ink = UIColor(hex: 0x474337)
             let accent = UIColor(hex: 0x9e5e2e)
             let format = UIGraphicsImageRendererFormat()
             format.scale = 1
             format.opaque = false
-            let image = UIGraphicsImageRenderer(size: CGSize(width: width, height: (markingArea.height * scale).rounded()), format: format).image { renderer in
+            let image = UIGraphicsImageRenderer(size: CGSize(width: width, height: (area.height * scale).rounded()), format: format).image { renderer in
                 let c = renderer.cgContext
                 func print(_ label: String, _ z: CGFloat, _ height: CGFloat, size: CGFloat = 0.003, color: UIColor? = nil, spacing: CGFloat = 0.00035) {
                     let font = UIFont(name: "DMMono-Medium", size: size * scale) ?? .monospacedSystemFont(ofSize: size * scale, weight: .medium)
