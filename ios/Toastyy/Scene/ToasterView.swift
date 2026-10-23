@@ -268,16 +268,16 @@ struct ToasterView: UIViewRepresentable {
             format.opaque = false
             let image = UIGraphicsImageRenderer(size: CGSize(width: width, height: 1408), format: format).image { renderer in
                 let c = renderer.cgContext
-                func print(_ label: String, _ z: CGFloat, _ height: CGFloat, size: CGFloat = 0.003, color: UIColor = ink, spacing: CGFloat = 0.00035) {
+                func print(_ label: String, _ z: CGFloat, _ height: CGFloat, size: CGFloat = 0.003, color: UIColor? = nil, spacing: CGFloat = 0.00035) {
                     let font = UIFont(name: "DMMono-Medium", size: size * scale) ?? .monospacedSystemFont(ofSize: size * scale, weight: .medium)
-                    let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: color, .kern: spacing * scale]
+                    let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: color ?? ink, .kern: spacing * scale]
                     let text = NSAttributedString(string: label, attributes: attributes)
                     let bounds = text.size()
                     // Trailing kern is not visible, so center the glyphs alone.
                     text.draw(at: CGPoint(x: x(z) - (bounds.width - spacing * scale) / 2, y: y(height) - bounds.height / 2))
                 }
-                func line(_ points: [(CGFloat, CGFloat)], color: UIColor = accent, width lineWidth: CGFloat = 0.00035) {
-                    c.setStrokeColor(color.cgColor)
+                func line(_ points: [(CGFloat, CGFloat)], color: UIColor? = nil, width lineWidth: CGFloat = 0.00035) {
+                    c.setStrokeColor((color ?? accent).cgColor)
                     c.setLineWidth(lineWidth * scale)
                     c.setLineCap(.round)
                     c.setLineJoin(.round)
