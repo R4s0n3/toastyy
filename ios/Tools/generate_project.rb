@@ -58,7 +58,7 @@ app.build_configurations.each do |config|
     'INFOPLIST_FILE' => 'Toastyy/Info.plist',
     'GENERATE_INFOPLIST_FILE' => 'NO',
     'MARKETING_VERSION' => '1.0.0',
-    'CURRENT_PROJECT_VERSION' => '1',
+    'CURRENT_PROJECT_VERSION' => '2',
     'CODE_SIGN_STYLE' => 'Automatic',
     'TARGETED_DEVICE_FAMILY' => '1',
     'SUPPORTS_MACCATALYST' => 'NO',

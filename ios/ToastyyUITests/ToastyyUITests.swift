@@ -42,6 +42,8 @@ final class ToastyyUITests: XCTestCase {
         app.buttons["collectionButton"].tap()
         XCTAssertTrue(app.staticTexts["Toast, evolved."].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["Dry toast"].exists)
+        XCTAssertTrue(app.staticTexts["DAYDREAM"].exists)
+        XCTAssertFalse(app.staticTexts["Happy camper"].exists)
         attach(app, "Native toaster — collection")
         app.buttons["collectionClose"].tap()
         _ = waitForLever(app, timeout: 3)

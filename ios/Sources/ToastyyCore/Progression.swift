@@ -13,13 +13,7 @@ public struct ToastSkin: Identifiable, Equatable, Sendable {
 
     public static let all: [ToastSkin] = [
         .init(id: "dry", name: "Dry toast", xp: 0, finish: "THE ORIGINAL", note: "Just a little bread with a big future.", color: 0xb9874b, metallic: 0, roughness: 0.9),
-        .init(id: "doodle", name: "Happy camper", xp: 70, finish: "PAINTED", note: "Sunny doodles. Wobbly lines. A very good morning.", color: 0xe39951, metallic: 0, roughness: 0.72),
-        .init(id: "berry", name: "Berry groovy", xp: 200, finish: "PAINTED", note: "Pink lemonade and big, juicy swirls.", color: 0xce6289, metallic: 0, roughness: 0.55),
-        .init(id: "porcelain", name: "Blue china", xp: 400, finish: "GLAZED CERAMIC", note: "Cobalt brushwork under a glossy porcelain glaze.", color: 0x5473a7, metallic: 0.05, roughness: 0.24),
-        .init(id: "copper", name: "Copper club", xp: 700, finish: "BRUSHED METAL", note: "Warm copper with a little hard-earned patina.", color: 0xb96f4c, metallic: 0.88, roughness: 0.3),
-        .init(id: "chrome", name: "Silver service", xp: 1100, finish: "POLISHED METAL", note: "A mirror-bright slice for a very smooth operator.", color: 0x8b9ba8, metallic: 1, roughness: 0.15),
-        .init(id: "gold", name: "Golden child", xp: 1700, finish: "GOLD LEAF", note: "A little ridiculous. Completely golden. All yours.", color: 0xbd9436, metallic: 0.94, roughness: 0.23),
-        .init(id: "prism", name: "Daydream", xp: 2500, finish: "IRIDESCENT", note: "Pearl, lilac, mint. A different color at every turn.", color: 0x9b82bb, metallic: 0.55, roughness: 0.2),
+        .init(id: "prism", name: "DAYDREAM", xp: 1_000_000, finish: "IRIDESCENT", note: "Pearl, lilac, mint. A different color at every turn.", color: 0x9b82bb, metallic: 0.55, roughness: 0.2),
     ]
 }
 

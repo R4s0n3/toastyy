@@ -27,7 +27,7 @@ struct CollectionDialog: View {
                 levelRow.padding(.vertical, 18)
                 detail
                 grid.padding(.top, 21)
-                Text("Every slice earns XP. Perfect timing earns more. New levels equip your new toast automatically.")
+                Text("Every slice earns XP. Perfect timing earns more. Reach 1,000,000 XP to unlock DAYDREAM.")
                     .font(Typeface.sans(9, .medium)).lineSpacing(4)
                     .foregroundStyle(Color(hex: 0x8b7b64))
                     .fixedSize(horizontal: false, vertical: true)

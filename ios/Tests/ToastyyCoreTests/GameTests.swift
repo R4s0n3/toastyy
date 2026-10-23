@@ -48,7 +48,7 @@ func referenceTimingAndPoints(sample: (Double, Rating, Int)) {
     #expect(game.streak == 1)
     #expect(game.records.perfects == 1)
     #expect(game.progression.xp == 100)
-    #expect(game.progression.skin.id == "doodle")
+    #expect(game.progression.skin.id == "dry")
     game.nextRound()
     game.start(at: 10, randomUnit: 0)
     game.stop(at: 12)
@@ -123,13 +123,13 @@ func referenceTimingAndPoints(sample: (Double, Rating, Int)) {
 
 @Test func xpThresholdsEquipmentAndStreakCap() {
     var progression = Progression()
-    progression.equip(ToastSkin.all[7])
+    progression.equip(ToastSkin.all[1])
     #expect(progression.skin.id == "dry")
     let reward = progression.award(rating: .golden, streak: 1)
     #expect(reward.earned == 70)
-    #expect(reward.unlocked.map(\.id) == ["doodle"])
-    #expect(progression.current.level == 2)
-    #expect(progression.fraction == 0)
+    #expect(reward.unlocked.isEmpty)
+    #expect(progression.current.level == 1)
+    #expect(progression.fraction == 70.0 / 1_000_000)
     #expect(progression.award(rating: .perfect, streak: 100).earned == 110)
     #expect(progression.award(rating: .miss, streak: 100).earned == 5)
     progression.equip(ToastSkin.all[0])
@@ -171,4 +171,32 @@ func referenceTimingAndPoints(sample: (Double, Rating, Int)) {
         let normal = geometry.normals[a]
         #expect(cross.x * normal.x + cross.y * normal.y + cross.z * normal.z > 0)
     }
+}
+
+@Test func launchCollectionUnlocksOnlyDaydreamAtOneMillionXP() {
+    #expect(ToastSkin.all.map(\.id) == ["dry", "prism"])
+    var progression = Progression(xp: 999_899)
+    #expect(progression.award(rating: .perfect, streak: 1).unlocked.isEmpty)
+    #expect(progression.xp == 999_999)
+    #expect(progression.skin.id == "dry")
+    progression.equip(ToastSkin.all[1])
+    #expect(progression.skin.id == "dry")
+    let reward = progression.award(rating: .miss, streak: 0)
+    #expect(reward.unlocked.map(\.id) == ["prism"])
+    #expect(progression.skin.name == "DAYDREAM")
+    #expect(progression.next == nil)
+    #expect(progression.fraction == 1)
+    #expect(progression.award(rating: .perfect, streak: 1).unlocked.isEmpty)
+}
+
+@Test func priorBuildSavesKeepXPButRespectLaunchCollection() throws {
+    for oldSkin in ["doodle", "berry", "porcelain", "copper", "chrome", "gold", "prism"] {
+        let data = Data("{\"xp\":2500,\"equipped\":\"\(oldSkin)\",\"saves\":42}".utf8)
+        let progression = try JSONDecoder().decode(Progression.self, from: data)
+        #expect(progression.xp == 2500)
+        #expect(progression.saves == 42)
+        #expect(progression.equipped == "dry")
+        #expect(progression.next?.id == "prism")
+    }
+    #expect(Progression(xp: 1_000_000, equipped: "prism").skin.id == "prism")
 }

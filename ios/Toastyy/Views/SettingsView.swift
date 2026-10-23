@@ -6,7 +6,7 @@ struct SettingsDialog: View {
     let width: CGFloat
     private let steps: [(String, String)] = [
         ("Turn", " the round knob to set difficulty."),
-        ("Start", " with dry toast. Earn XP to unlock painted designs, ceramics, and metals."),
+        ("Start", " with dry toast. Earn 1,000,000 XP to unlock DAYDREAM."),
         ("Pull", " the side lever down."),
         ("Wait", " while the toaster heats up."),
         ("Tap", " as late as you dare—before it pops. Nail it for bonus XP and your next toast level."),
