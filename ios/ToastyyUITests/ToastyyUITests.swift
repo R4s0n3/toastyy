@@ -43,9 +43,15 @@ final class ToastyyUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["BURNT"].waitForExistence(timeout: 5))
         XCTAssertTrue(start.waitForExistence(timeout: 5))
         app.buttons["Settings"].tap()
-        XCTAssertTrue(app.switches["Sound"].waitForExistence(timeout: 3))
-        app.switches["Sound"].tap()
+        let sound = app.switches["soundSetting"]
+        XCTAssertTrue(sound.waitForExistence(timeout: 3))
+        XCTAssertEqual(sound.value as? String, "1")
+        // SwiftUI exposes the full Form row as the switch's accessibility frame.
+        // Tap the trailing switch control, rather than the row's inert center.
+        sound.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        expectation(for: NSPredicate(format: "value == '0'"), evaluatedWith: sound)
+        waitForExpectations(timeout: 3)
         app.buttons["Done"].tap()
-        XCTAssertTrue(app.buttons["Turn sound on"].exists)
+        XCTAssertTrue(app.buttons["Turn sound on"].waitForExistence(timeout: 3))
     }
 }

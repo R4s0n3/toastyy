@@ -8,7 +8,9 @@ struct SettingsView: View {
             Form {
                 Section("Make yourself at home") {
                     Toggle("Sound", isOn: Binding(get: { !store.muted }, set: { store.muted = !$0 }))
+                        .accessibilityIdentifier("soundSetting")
                     Toggle("Haptics", isOn: $store.haptics)
+                        .accessibilityIdentifier("hapticsSetting")
                     Button("Your records") { store.sheet = .records }
                 }
                 Section("The breakfast brief") {
