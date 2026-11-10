@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-11-10",
+  "version": "1.0.0",
+  "build": 5,
+  "sourceCommit": "89e4a72",
+  "testFlightUpload": "succeeded",
+  "testFlightProcessingAndGroups": "not verified: Apple login required",
+  "appStoreConnect": "login required; no metadata changed",
+  "adMob": "login required; no messages/configuration changed",
+  "productionAdsEnabled": false,
+  "publicAppAdsTxt": "HTTP 404 confirmed in browser",
+  "publicPrivacyPolicy": "website-only title/subtitle observed; Toastyy addition not published by this task",
+  "screenshots": "4 captured and prepared; not uploaded",
+  "uiTests": "2 passed on iPhone 17 Pro / iOS 26.5",
+  "website": "static files prepared, not deployed",
+  "appReviewSubmission": "not submitted"
+}

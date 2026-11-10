@@ -1,0 +1,13 @@
+Toastyy 1.0.0 (5)
+
+What to test
+• Larger toaster, readable XP and score, background-only paper grain.
+• Camera smoothly centers the toaster when the lever goes down.
+• WAIT becomes STOP only in the final 720 ms. Early taps must not stop or score.
+• Miss the window and the toast burns.
+• Try every difficulty, sound/haptics, app switching and relaunching.
+• Verify XP and records remain after updating from an earlier build.
+• Test Remove Ads and Restore Purchases in the TestFlight sandbox; no real charge should occur.
+• Check consent choices and eligible test ads on a physical iPhone.
+
+Known release limitation: this build uses test advertising. Production advertising and final privacy configuration require separate release preparation.

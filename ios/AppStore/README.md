@@ -1,6 +1,29 @@
 # App Store submission preparation
 
-Prepared on 2026-10-23 for App Store Connect app 6826357624.
+Prepared for App Store Connect app 6826357624.
+
+## Latest handoff · 2026-11-10
+
+- TestFlight 1.0.0 (5) uploaded successfully with the approved enlarged toaster,
+  final-720-ms stop window, and centered active camera.
+- App Store Connect and AdMob require a fresh browser login. Processing,
+  test-group assignment, contracts and account changes could not be verified.
+- Current screenshots in `screenshots/` replace the old local assets. All four
+  are unmodified 1206 × 2622 PNGs with no alpha, captured from successful UI
+  tests on iPhone 17 Pro / iOS 26.5. Their upload to Apple is still pending.
+- Review notes and description now explain WAIT → STOP and ignored early taps.
+- `launch-kit/todo.html` is the interactive owner checklist. The directory also
+  contains test notes, device checks, App Privacy worksheet and ready support
+  website / app-ads.txt files with deployment instructions.
+- Public app-ads.txt returned HTTP 404; privacy page still presents itself as
+  website privacy. Neither website nor account configuration was published.
+- Both current UI tests passed. The larger-phone drag test now travels 180 pt
+  and verifies the game status, rather than treating the hidden STOP button as
+  proof that a round started. App code is unchanged from uploaded build 5.
+
+The historical preparation below remains a record, not a fresh account audit.
+
+## Earlier account preparation · 2026-10-23
 No submission has been sent for App Review.
 
 ## Prepared in App Store Connect

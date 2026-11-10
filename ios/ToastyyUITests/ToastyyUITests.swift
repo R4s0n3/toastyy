@@ -56,8 +56,10 @@ final class ToastyyUITests: XCTestCase {
         let app = launch()
         let lever = waitForLever(app)
         let handle = lever.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        handle.press(forDuration: 0.1, thenDragTo: handle.withOffset(CGVector(dx: 0, dy: 110)))
-        XCTAssertTrue(app.buttons["stopButton"].waitForExistence(timeout: 2))
+        handle.press(forDuration: 0.1, thenDragTo: handle.withOffset(CGVector(dx: 0, dy: 180)))
+        let status = app.descendants(matching: .any)["gameStatus"]
+        expectation(for: NSPredicate(format: "value == 'Toasting' OR value == 'Almost'"), evaluatedWith: status)
+        waitForExpectations(timeout: 2)
         attach(app, "Native toaster — toasting")
         XCTAssertTrue(app.staticTexts["BURNT"].waitForExistence(timeout: 5))
         attach(app, "Native toaster — burnt")

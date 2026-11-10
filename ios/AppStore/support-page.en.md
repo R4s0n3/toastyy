@@ -8,8 +8,10 @@ description of the issue. Never send passwords or payment details.
 
 ## How to play
 
-Turn the knob to select difficulty, pull the lever, and stop the toaster before
-the toast burns. Each attempt earns XP. DAYDREAM unlocks at 1,000,000 total XP.
+Turn the knob to select difficulty and pull the lever. Wait until the orange
+button changes from WAIT to STOP, then tap the screen or STOP before the toast
+burns. Stops count only in the final 720 milliseconds. Early taps keep toasting
+and earn nothing. A successful stop earns XP; a burnt slice earns 5 XP. DAYDREAM unlocks at 1,000,000 total XP.
 
 ## Sound and haptics
 

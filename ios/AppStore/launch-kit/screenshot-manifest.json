@@ -1,0 +1,36 @@
+{
+  "captured": "2026-11-10",
+  "version": "1.0.0",
+  "build": 5,
+  "device": "iPhone 17 Pro",
+  "runtime": "iOS 26.5",
+  "source": "XCTest attachments; unmodified PNG screenshots",
+  "uiTesting": "isolated local progress; ads and StoreKit network work disabled",
+  "uploadedToAppStoreConnect": false,
+  "screenshots": [
+    {
+      "file": "01-ready.png",
+      "sha256": "36af84ffa9229c7e9dc6a437aec4a4cc095c8e3f489c6c915ca3c3bdae971685",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "02-toasting.png",
+      "sha256": "1f4914e7f67464ad48e2033f0cd6c75719134da03593959df9f41627d3353a72",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "03-collection.png",
+      "sha256": "c9d8349a4fd667c3e8ac25d95d6610e994a298c1d33b14377df898a12f94f2c2",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "remove-ads-review.png",
+      "sha256": "f079e04adbba72115d631bf4e6038b8005725d8c3911dd3c44244b8f6f61b292",
+      "width": 1206,
+      "height": 2622
+    }
+  ]
+}
