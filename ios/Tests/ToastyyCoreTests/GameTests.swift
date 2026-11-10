@@ -11,9 +11,6 @@ import Testing
 }
 
 @Test(arguments: [
-    (0.0, Rating.early, 35),
-    (1.4, Rating.early, 125), // The web uses a strict > 50% threshold.
-    (1.68, Rating.pale, 216),
     (2.24, Rating.nice, 512),
     (2.6, Rating.golden, 801),
     (2.7, Rating.perfect, 897),
@@ -51,23 +48,22 @@ func referenceTimingAndPoints(sample: (Double, Rating, Int)) {
     #expect(game.progression.skin.id == "dry")
     game.nextRound()
     game.start(at: 10, randomUnit: 0)
-    game.stop(at: 12)
-    // Math.round(1000 * (2 / 2.73)^3) = 393, then the prior streak adds 25.
-    #expect(game.result?.points == 418)
-    #expect(game.score == 1315)
+    game.stop(at: 12.3)
+    #expect(game.result?.points == 623)
+    #expect(game.score == 1520)
     #expect(game.streak == 2)
     game.nextRound()
     game.start(at: 20, randomUnit: 0)
     game.tick(at: 30)
     #expect(game.result?.rating == .miss)
-    #expect(game.score == 1315) // Preserve the run total while displaying the result.
+    #expect(game.score == 1520) // Preserve the run total while displaying the result.
     #expect(game.streak == 0)
-    #expect(game.records.best == 1315)
+    #expect(game.records.best == 1520)
     let xp = game.progression.xp
     game.nextRound()
     #expect(game.score == 0)
     #expect(game.round == 0)
-    #expect(game.records.best == 1315)
+    #expect(game.records.best == 1520)
     #expect(game.progression.xp == xp)
 }
 
@@ -214,4 +210,25 @@ func referenceTimingAndPoints(sample: (Double, Rating, Int)) {
     for _ in 0..<6 { policy.completedRound() }
     #expect(!policy.isEligible(afterBurn: true, now: 249))
     #expect(policy.isEligible(afterBurn: true, now: 250))
+}
+
+@Test func earlyTapsCannotFarmPointsOrXP() {
+    for difficulty in Difficulty.allCases {
+        var game = Game(difficulty: difficulty)
+        game.start(at: 10, randomUnit: 0)
+        let duration = difficulty.duration(round: 1, randomUnit: 0)
+        for offset in [0.0, 0.01, 0.1, duration - Game.stopWindow - 0.001] {
+            game.stop(at: 10 + offset)
+            #expect(game.phase == .toasting)
+            #expect(game.score == 0)
+            #expect(game.progression.xp == 0)
+            #expect(game.streak == 0)
+        }
+        game.stop(at: 10 + duration - Game.stopWindow + 0.001)
+        #expect(game.phase == .result)
+        #expect(game.result?.points ?? 0 > 0)
+        let xp = game.progression.xp
+        game.stop(at: 10 + duration - 0.1)
+        #expect(game.progression.xp == xp)
+    }
 }

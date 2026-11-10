@@ -112,7 +112,7 @@ struct GameView: View {
                 if phase == .toasting {
                     // Like the web, a touch anywhere on the stage stops the toaster immediately.
                     Color.clear.contentShape(Rectangle())
-                        .gesture(DragGesture(minimumDistance: 0).onChanged { _ in store.stop() })
+                        .onTapGesture { store.stop() }
                         .accessibilityHidden(true)
                 }
                 HeatMeter(heat: store.heat, visible: phase == .toasting)
@@ -136,7 +136,7 @@ struct GameView: View {
         if store.sceneError != nil { return "Toaster unavailable" }
         switch store.game.phase {
         case .ready: return "Pull to toast ↓"
-        case .toasting: return "Tap before it pops"
+        case .toasting: return store.danger > 0 ? "Now! Tap to stop" : "Wait for it…"
         case .result: return ""
         }
     }
@@ -239,7 +239,7 @@ struct GameView: View {
         return Button(action: store.stop) {
             HStack(spacing: 11) {
                 RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(lineWidth: 2).frame(width: 18, height: 18)
-                Text("STOP").font(Typeface.sans(22, .extraBold)).tracking(em: 0.04, size: 22)
+                Text(store.danger > 0 ? "STOP" : "WAIT…").font(Typeface.sans(22, .extraBold)).tracking(em: 0.04, size: 22)
             }
             .foregroundStyle(Color(hex: 0x2d2119))
             .frame(width: min(size.width * 0.86, 360))
@@ -248,7 +248,7 @@ struct GameView: View {
         .buttonStyle(StopButtonStyle(urgent: store.danger > 0.22 && !reducedMotion))
         .accessibilityIdentifier("stopButton")
         .accessibilityHidden(!visible)
-        .disabled(!visible)
+        .disabled(!visible || store.danger <= 0)
         .opacity(visible ? 1 : 0)
         .offset(y: visible ? 0 : 98)
         .animation(visible ? .spring(response: 0.28, dampingFraction: 0.62) : .easeOut(duration: 0.2), value: visible)

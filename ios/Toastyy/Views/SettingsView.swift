@@ -9,8 +9,8 @@ struct SettingsDialog: View {
         ("Turn", " the round knob to set difficulty."),
         ("Start", " with dry toast. Earn 1,000,000 XP to unlock DAYDREAM."),
         ("Pull", " the side lever down."),
-        ("Wait", " while the toaster heats up."),
-        ("Tap", " as late as you dare—before it pops. Nail it for bonus XP and your next toast level."),
+        ("Wait", " until the STOP button lights up."),
+        ("Tap", " during the final moment before it pops. Early taps keep toasting and earn nothing."),
     ]
 
     var body: some View {

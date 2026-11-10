@@ -25,3 +25,10 @@ and release.
 Adds AdMob/UMP integration with test ads only, a privacy link, and StoreKit
 Remove Ads purchase/restoration. See ADVERTISING.md for account-side setup,
 physical-device verification, and production release gates.
+
+## TestFlight 1.0.0 (4)
+
+Enlarges and optically centers the toaster, simplifies the game HUD to a single
+play cue, increases score and XP readability, and confines paper grain to the
+background. Stops count only during the last 720 ms before the pop; early taps
+keep toasting and earn no points or XP. Includes build 3's test-ad and StoreKit configuration.

@@ -103,6 +103,15 @@ public struct Game: Sendable {
         return min(1, max(0, ((pausedAt ?? now) - startedAt) / duration))
     }
 
+    /// Stops count only during the final 720 ms before the pop.
+    public static let stopWindow = 0.72
+
+    public func canStop(at now: Double) -> Bool {
+        guard phase == .toasting, pausedAt == nil else { return false }
+        let remaining = duration - (now - startedAt)
+        return remaining > 0 && remaining <= Self.stopWindow
+    }
+
     public func danger(at now: Double) -> Double {
         guard phase == .toasting else { return 0 }
         return min(1, max(0, ((pausedAt ?? now) - startedAt - duration + 0.72) / 0.72))
@@ -120,6 +129,7 @@ public struct Game: Sendable {
             finish(rating: .miss, points: 0, remaining: 0, heat: 1)
             return
         }
+        guard canStop(at: now) else { return }
         let remaining = duration - elapsed
         let heat = elapsed / duration
         let rating: Rating = remaining < 0.15 ? .perfect : heat > 0.9 ? .golden : heat > 0.74 ? .nice : heat > 0.5 ? .pale : .early

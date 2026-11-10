@@ -108,7 +108,7 @@ final class GameStore: ObservableObject {
     func stop() {
         guard active, game.phase == .toasting else { return }
         game.stop(at: ProcessInfo.processInfo.systemUptime)
-        didFinish()
+        if game.phase == .result { didFinish() }
     }
 
     func dragLever(_ progress: Float) {

@@ -35,6 +35,8 @@ final class ToastyyUITests: XCTestCase {
         // A Golden round lasts 2.8 s under UI testing, so stop first and capture the toasting state in the burn test.
         let stop = app.buttons["stopButton"]
         XCTAssertTrue(stop.waitForExistence(timeout: 2))
+        expectation(for: NSPredicate(format: "enabled == true"), evaluatedWith: stop)
+        waitForExpectations(timeout: 3)
         stop.tap()
         XCTAssertTrue(app.descendants(matching: .any)["roundResult"].waitForExistence(timeout: 2))
         attach(app, "Native toaster — result")

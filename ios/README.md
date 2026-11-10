@@ -31,7 +31,9 @@ client’s behavior.
 
 - Tap the 3D knob or drag it horizontally to set difficulty.
 - Drag the physical lever down, or tap it, to start.
-- Touch anywhere on the stage, or **Stop Toaster**, just before the pop. The last
+- Tap anywhere on the stage, or **STOP**, during the final 720 ms before the pop.
+  The button shows **WAIT…** before that window; early taps earn nothing and
+  keep the round running. The last
   150 ms is a perfect save. Missing ends the run; permanent records and XP remain.
 - The four cabinet buttons toggle sound and haptics and open settings and records.
   The **?** button opens settings and how to play.
