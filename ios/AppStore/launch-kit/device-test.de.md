@@ -2,6 +2,8 @@
 
 Datum / iPhone / iOS: ____________________
 
+Aktueller Befund des Eigentümers: Remove Ads meldet „purchase is not available yet“. Produktabruf zuerst mit Apple-Vertrags- und Produktstatus abgleichen; Kauf/Wiederherstellung sind noch nicht bestanden.
+
 - [ ] Update über TestFlight: vorhandene XP, Rekorde und Einstellungen bleiben erhalten. Nicht vorher löschen.
 - [ ] Start durch Tippen und Ziehen des Hebels; alle vier Schwierigkeitsstufen testen.
 - [ ] Toaster bleibt nach der Drehung zentriert; Knopf, Hebel, STOP und XP werden nicht abgeschnitten.

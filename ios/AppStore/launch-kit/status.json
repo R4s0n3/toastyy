@@ -13,5 +13,6 @@
   "screenshots": "4 captured and prepared; not uploaded",
   "uiTests": "2 passed on iPhone 17 Pro / iOS 26.5",
   "website": "static files prepared, not deployed",
-  "appReviewSubmission": "not submitted"
+  "appReviewSubmission": "not submitted",
+  "removeAdsDeviceTest": "Owner reports purchase is not available yet. Product loading failed or returned no product. Root cause unverified; App Store Connect login required."
 }
