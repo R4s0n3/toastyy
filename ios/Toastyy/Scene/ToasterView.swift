@@ -344,11 +344,11 @@ struct ToasterView: UIViewRepresentable {
             return (forward, right, simd_cross(right, forward))
         }
 
-        private func screenBounds(eye: SIMD3<Float>, target: SIMD3<Float>, fov: Float, size: CGSize) -> CGRect {
+        private func screenBounds(eye: SIMD3<Float>, target: SIMD3<Float>, fov: Float, size: CGSize, corners: [SIMD3<Float>]? = nil) -> CGRect {
             let (forward, right, up) = basis(eye: eye, target: target)
             let tanHalf = tan(fov * .pi / 360)
             let aspect = Float(size.width / size.height)
-            let points = framingCorners.map { point -> CGPoint in
+            let points = (corners ?? framingCorners).map { point -> CGPoint in
                 let v = point - eye
                 let depth = max(0.001, simd_dot(v, forward))
                 let x = simd_dot(v, right) / (depth * tanHalf * aspect)
@@ -361,7 +361,7 @@ struct ToasterView: UIViewRepresentable {
 
         /// Fit generously across the stage, allowing the tray to overlap the base, then
         /// slide the camera so it is centered there (the web uses a projection view offset).
-        private func frameCamera() {
+        private func frameCamera(pose: Float = 0) {
             let size = lastSize
             guard size.width > 0, size.height > 0 else { return }
             // Relative to the toaster origin; the web stage sits at (0.012, -0.02, 0).
@@ -378,8 +378,16 @@ struct ToasterView: UIViewRepresentable {
             let fit = Float(min(size.width * 1.02 / bounds.width, (contentBottom - contentTop) / bounds.height))
             fov = 2 * atan(tan(fov * .pi / 360) / fit) * 180 / .pi
             bounds = screenBounds(eye: eye, target: target, fov: fov, size: size)
-            // A small optical offset balances the cabinet’s angled silhouette.
-            let dx = Float(bounds.midX - (size.width / 2 + 8))
+            // Follow the cabinet through its turn while keeping the framing size steady.
+            // The ready-pose corners were measured with the stage rotated by -7 degrees.
+            let restRotation = simd_quatf(angle: -7 * .pi / 180, axis: SIMD3<Float>(0, 1, 0))
+            let movingCorners = framingCorners.map {
+                stage.orientation.act(restRotation.inverse.act($0) * stage.scale) + stage.position
+            }
+            let movingBounds = screenBounds(eye: eye, target: target, fov: fov, size: size, corners: movingCorners)
+            let centerX = bounds.midX + (movingBounds.midX - bounds.midX) * CGFloat(pose)
+            // Ease out the idle optical offset as the camera tracks into the active pose.
+            let dx = Float(centerX - (size.width / 2 + 8 * CGFloat(1 - pose)))
             let dy = Float(bounds.midY - (contentTop + contentBottom) / 2)
             let (_, right, up) = basis(eye: eye, target: target)
             let perPoint = 2 * simd_length(target - eye) * tan(fov * .pi / 360) / Float(size.height)
@@ -426,6 +434,7 @@ struct ToasterView: UIViewRepresentable {
             stage.orientation = simd_quatf(angle: -7 * .pi / 180 + pose * 0.26, axis: [0, 1, 0])
             stage.scale = SIMD3(repeating: 1 + 0.03 * pose)
             stage.position = [-0.006 * pose, -0.004 * pose - latchKick * 0.0028, 0]
+            frameCamera(pose: pose)
 
             let heat = Float(store.visualHeat), danger = Float(store.visualDanger)
             heater.light.intensity = (heat * 2.2 + danger * 3.8) * 1000

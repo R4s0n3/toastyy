@@ -32,3 +32,9 @@ Enlarges and optically centers the toaster, simplifies the game HUD to a single
 play cue, increases score and XP readability, and confines paper grain to the
 background. Stops count only during the last 720 ms before the pop; early taps
 keep toasting and earn no points or XP. Includes build 3's test-ad and StoreKit configuration.
+
+## TestFlight 1.0.0 (5)
+
+Adds smooth camera tracking as the toaster turns at the start of a round. The
+active cabinet centers in the stage and returns to its optical idle offset
+afterward. Reduced Motion uses an immediate transition.
