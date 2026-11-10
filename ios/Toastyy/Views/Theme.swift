@@ -81,7 +81,7 @@ struct ToastProgress: View {
     }
 }
 
-/// The fixed paper grain the web app multiplies over the whole page.
+/// Paper texture, composited inside the background so the model and HUD stay clean.
 struct GrainOverlay: View {
     private static let tile: UIImage = {
         let size = 180

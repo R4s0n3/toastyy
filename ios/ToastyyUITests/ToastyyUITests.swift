@@ -52,7 +52,9 @@ final class ToastyyUITests: XCTestCase {
     @MainActor
     func testAutomaticBurnSettingsAndRecords() throws {
         let app = launch()
-        waitForLever(app).tap()
+        let lever = waitForLever(app)
+        let handle = lever.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        handle.press(forDuration: 0.1, thenDragTo: handle.withOffset(CGVector(dx: 0, dy: 110)))
         XCTAssertTrue(app.buttons["stopButton"].waitForExistence(timeout: 2))
         attach(app, "Native toaster — toasting")
         XCTAssertTrue(app.staticTexts["BURNT"].waitForExistence(timeout: 5))

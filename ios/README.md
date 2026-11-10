@@ -25,7 +25,9 @@ dependencies. Camera permission is unnecessary: the scene uses RealityKit's
 
 ## Play
 
-The screen mirrors the web client one to one; there are no extra native-only buttons.
+The native screen uses a compact score header, a single play cue, and a large
+toaster stage with an XP and collection panel. Physical controls retain the web
+client’s behavior.
 
 - Tap the 3D knob or drag it horizontally to set difficulty.
 - Drag the physical lever down, or tap it, to start.
@@ -41,7 +43,7 @@ The screen mirrors the web client one to one; there are no extra native-only but
 - Original toaster geometry, dimensions, and normals converted to bundled USDZ.
 - Web look and layout: bundled Manrope and DM Mono (SIL OFL, licenses in
   `Resources/Fonts`), the web color tokens, paper grain, transparent 3D stage,
-  the web camera framing between the copy and the tray, printed housing legends,
+  background-only grain, enlarged camera framing between the cue and the tray, printed housing legends,
   browning dial, and indicator lights.
 - Non-AR perspective camera, warm lighting, contact shadow, heater glow,
   knob detents, linked lever handle and inset, shaped bread, and crumbs.

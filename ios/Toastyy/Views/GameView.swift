@@ -1,11 +1,10 @@
 import SwiftUI
 import ToastyyCore
 
-/// A one-to-one port of the web client's layout: topbar, scorebar, the toaster stage, and footer.
+/// A compact HUD around a generous, uninterrupted toaster stage.
 struct GameView: View {
     @ObservedObject var store: GameStore
     @Environment(\.accessibilityReduceMotion) private var reducedMotion
-    @State private var copyBottom: CGFloat = 130
     @State private var loadingVisible = true
 
     var body: some View {
@@ -13,13 +12,11 @@ struct GameView: View {
             ZStack {
                 PageBackground()
                 VStack(spacing: 0) {
-                    topbar
                     scorebar
                     stage(window: window.size)
                     footer
                 }
                 .blur(radius: store.dialog == nil ? 0 : 4)
-                GrainOverlay().ignoresSafeArea()
                 dialogLayer(width: window.size.width)
                 if loadingVisible {
                     LoadingScreen(ready: store.sceneReady, error: store.sceneError)
@@ -40,42 +37,25 @@ struct GameView: View {
 
     // MARK: Header
 
-    private var topbar: some View {
-        HStack(spacing: 10) {
-            BrandMark()
-            Text("TOASTYY").font(Typeface.sans(18, .extraBold)).tracking(em: -0.04, size: 18)
-            Spacer()
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Toastyy")
-        .accessibilityAddTraits(.isHeader)
-        .padding(.horizontal, 24)
-        .padding(.top, 10)
-        .padding(.bottom, 12)
-        .frame(minHeight: 60)
-    }
-
     private var scorebar: some View {
-        HStack {
+        HStack(spacing: 16) {
+            BrandMark()
             scoreItem("SCORE", value: store.displayScore, alignment: .leading)
                 .accessibilityIdentifier("score")
-            StatusPill(label: status, style: statusStyle)
-                .accessibilityIdentifier("gameStatus")
             scoreItem("BEST", value: store.game.records.best, alignment: .trailing, highlighted: store.newBest)
         }
-        .padding(.horizontal, 4)
-        .padding(.top, 11)
-        .padding(.bottom, 13)
-        .overlay(alignment: .top) { Rectangle().fill(Palette.line).frame(height: 1) }
-        .overlay(alignment: .bottom) { Rectangle().fill(Palette.line).frame(height: 1) }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 10)
+        .frame(minHeight: 72)
     }
 
     private func scoreItem(_ title: String, value: Int, alignment: HorizontalAlignment, highlighted: Bool = false) -> some View {
         VStack(alignment: alignment, spacing: 1) {
-            Text(title).font(Typeface.mono(9)).tracking(em: 0.14, size: 9)
+            Text(title).font(Typeface.mono(10)).tracking(em: 0.1, size: 10)
             Text(formatScore(value))
-                .font(Typeface.mono(18)).tracking(em: -0.03, size: 18)
+                .font(Typeface.mono(title == "SCORE" ? 30 : 22))
+                .tracking(em: -0.03, size: title == "SCORE" ? 30 : 22)
+                .lineLimit(1).minimumScaleFactor(0.6)
                 .foregroundStyle(highlighted ? Palette.orange : Palette.ink)
                 .shadow(color: highlighted ? Palette.orange.opacity(0.28) : .clear, radius: 6)
                 .keyframeAnimator(initialValue: Punch(), trigger: title == "SCORE" ? store.successToken : 0) { content, punch in
@@ -122,13 +102,13 @@ struct GameView: View {
             let phase = store.game.phase
             ZStack(alignment: .topLeading) {
                 AmbientShapes(size: size, windowWidth: window.width)
-                ToasterView(store: store, reducedMotion: reducedMotion, insets: (copyBottom + 18, 83 + 45))
+                ToasterView(store: store, reducedMotion: reducedMotion, insets: (44, 72))
                     .accessibilityHidden(true)
                 SteamLines(visible: phase == .toasting, danger: store.visualDanger, reducedMotion: reducedMotion)
                     .position(x: size.width / 2, y: size.height * 0.34 + 15)
                 HeatAura(heat: store.visualHeat, diameter: min(window.width * 0.78, 440))
                     .position(x: size.width / 2, y: size.height * 0.57)
-                copy(window: window)
+                playCue
                 if phase == .toasting {
                     // Like the web, a touch anywhere on the stage stops the toaster immediately.
                     Color.clear.contentShape(Rectangle())
@@ -149,49 +129,31 @@ struct GameView: View {
             .clipped()
             .modifier(ShakeEffect(trigger: store.missToken, enabled: !reducedMotion))
             .coordinateSpace(name: "stage")
-            .onPreferenceChange(CopyBottomKey.self) { copyBottom = $0 }
         }
     }
 
-    private var copyText: (eyebrow: String, headline: String, subcopy: String) {
-        if store.sceneError != nil { return ("YOUR TOASTER, YOUR RULES", "Toaster missing", "Reinstall Toastyy to warm it back up.") }
+    private var cue: String {
+        if store.sceneError != nil { return "Toaster unavailable" }
         switch store.game.phase {
-        case .ready:
-            return (store.game.round > 0 ? "SET UP THE NEXT SLICE" : "YOUR TOASTER, YOUR RULES", "Set it. Pull it.", "Pull, time it right, and level up your toast.")
-        case .toasting:
-            return ("\(store.game.difficulty.title) · ROUND \(store.game.round)", "Listen closely…", "Tap anywhere as late as you dare.")
-        case .result:
-            guard let rating = store.game.result?.rating, rating != .miss else { return ("ROUND OVER", "Too slow!", "Cooling down for another run.") }
-            return ("ROUND COMPLETE", rating.headline, "Your next slice is almost ready.")
+        case .ready: return "Pull to toast ↓"
+        case .toasting: return "Tap before it pops"
+        case .result: return ""
         }
     }
 
-    private func copy(window: CGSize) -> some View {
-        let text = copyText
-        let headlineSize = min(52, max(30, window.width * 0.08))
-        return VStack(spacing: 0) {
-            Text(text.eyebrow)
-                .font(Typeface.mono(10)).tracking(em: 0.18, size: 10)
-                .foregroundStyle(Color(hex: 0x766d5d))
-                .padding(.bottom, 6)
-            Text(text.headline)
-                .font(Typeface.sans(headlineSize, .extraBold)).tracking(em: -0.065, size: headlineSize)
-                .lineLimit(1).minimumScaleFactor(0.6)
-                .accessibilityAddTraits(.isHeader)
-            Text(text.subcopy)
-                .font(Typeface.sans(13, .medium))
-                .foregroundStyle(Color(hex: 0x665f53))
-                .padding(.top, 9)
+    private var playCue: some View {
+        HStack(spacing: 10) {
+            Text(cue)
+                .font(Typeface.sans(18, .bold))
+                .tracking(em: -0.03, size: 18)
+                .lineLimit(1).minimumScaleFactor(0.8)
+            Spacer(minLength: 0)
+            StatusPill(label: status, style: statusStyle)
+                .accessibilityIdentifier("gameStatus")
         }
-        .multilineTextAlignment(.center)
-        .frame(width: min(window.width * 0.9, 440))
-        .accessibilityElement(children: .combine)
+        .padding(.horizontal, 24)
+        .padding(.top, 8)
         .allowsHitTesting(false)
-        .background(GeometryReader { proxy in
-            Color.clear.preference(key: CopyBottomKey.self, value: proxy.frame(in: .named("stage")).maxY)
-        })
-        .frame(maxWidth: .infinity)
-        .padding(.top, min(46, max(20, window.height * 0.042)))
     }
 
     // MARK: Toaster controls
@@ -211,8 +173,8 @@ struct GameView: View {
             ForEach(Array(layout.buttons.enumerated()), id: \.offset) { index, point in
                 FrontButton(store: store, index: index, height: frontButtonHeight(layout.buttons)).position(point)
             }
-            collectionTray
-                .position(x: size.width / 2, y: size.height - min(26, max(10, size.height * 0.022)) - 41.5)
+            collectionTray(width: size.width - 32)
+                .position(x: size.width / 2, y: size.height - 56)
         }
         .opacity(ready ? 1 : 0)
         .offset(y: ready || !store.sceneReady ? 0 : 9)
@@ -226,42 +188,46 @@ struct GameView: View {
         return min(44, abs(last.y - first.y) / CGFloat(points.count - 1) * 0.96)
     }
 
-    private var collectionTray: some View {
+    private func collectionTray(width: CGFloat) -> some View {
         let progression = store.game.progression
         let skin = progression.skin
         let next = progression.next
         let nextText = next.map { "\($0.xp - progression.xp) XP to \($0.name)" } ?? "Every toast, earned."
         let hasNew = !store.unseenSkins.isEmpty
         return Button { store.openCollection() } label: {
-            HStack(spacing: 11) {
-                SkinThumbnail(skin: skin).frame(width: 51, height: 57)
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("LV. \(twoDigits(progression.current.level))")
-                        .font(Typeface.mono(7)).tracking(em: 0.08, size: 7).foregroundStyle(Color(hex: 0xa3733d))
-                    Text(skin.name).font(Typeface.sans(12, .bold)).tracking(em: -0.03, size: 12)
-                    ToastProgress(value: progression.fraction).padding(.vertical, 2)
-                    Text(nextText).font(Typeface.sans(8, .medium)).foregroundStyle(Color(hex: 0x8b7a60)).lineLimit(1)
+            HStack(spacing: 12) {
+                SkinThumbnail(skin: skin).frame(width: 44, height: 54)
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("LV. \(twoDigits(progression.current.level))")
+                            .font(Typeface.mono(15))
+                        Spacer(minLength: 8)
+                        Text("\(progression.xp.formatted()) XP")
+                            .font(Typeface.mono(16))
+                            .foregroundStyle(Palette.ink)
+                            .lineLimit(1).minimumScaleFactor(0.8)
+                    }
+                    ToastProgress(value: progression.fraction, height: 10, tint: Palette.orange)
+                    HStack {
+                        Text(skin.name).font(Typeface.sans(13, .bold))
+                        Spacer(minLength: 4)
+                        if hasNew {
+                            Text("NEW").font(Typeface.mono(10)).foregroundStyle(Palette.orange)
+                        }
+                        Image(systemName: "chevron.right").font(.system(size: 12, weight: .bold))
+                    }
+                    .foregroundStyle(Color(hex: 0x75634d))
                 }
-                VStack(alignment: .trailing, spacing: 5) {
-                    Text("YOUR TOASTS")
-                    Text("\(progression.current.level) / \(ToastSkin.all.count)")
-                        .font(Typeface.mono(10)).foregroundStyle(Color(hex: 0x4e493c))
-                    Text("↗")
-                    if hasNew { Text("NEW").font(Typeface.mono(6)).foregroundStyle(Color(hex: 0xb65c30)) }
-                }
-                .font(Typeface.mono(7)).tracking(em: 0.06, size: 7)
-                .foregroundStyle(hasNew ? Color(hex: 0xbd5c31) : Color(hex: 0x8d7b61))
             }
-            .padding(.vertical, 10).padding(.leading, 9).padding(.trailing, 14)
-            .frame(width: min(UIScreen.main.bounds.width * 0.86, 355), alignment: .leading)
-            .frame(minHeight: 83)
-            .background(Color(red: 250 / 255, green: 245 / 255, blue: 232 / 255, opacity: 0.94), in: RoundedRectangle(cornerRadius: 19, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 19, style: .continuous).stroke(Color(hex: 0xd7cbb5), lineWidth: 1))
-            .shadow(color: Color(red: 91 / 255, green: 67 / 255, blue: 34 / 255, opacity: 0.06), radius: 11, y: 7)
+            .padding(.horizontal, 14)
+            .frame(width: min(width, 420), height: 88, alignment: .leading)
+            .background(Color(hex: 0xfaf5e8), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(Color(hex: 0xd7cbb5), lineWidth: 1))
+            .shadow(color: Color(hex: 0x5b4322, opacity: 0.08), radius: 16, y: 6)
         }
         .buttonStyle(PressableStyle())
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Toast collection. Level \(progression.current.level). Equipped: \(skin.name). \(nextText)")
+        .accessibilityLabel("Toast collection. Level \(progression.current.level). \(progression.xp) XP. Equipped: \(skin.name). \(nextText)")
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("collectionButton")
     }
@@ -273,11 +239,7 @@ struct GameView: View {
         return Button(action: store.stop) {
             HStack(spacing: 11) {
                 RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(lineWidth: 2).frame(width: 18, height: 18)
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("STOP TOASTER").font(Typeface.sans(14, .extraBold)).tracking(em: 0.04, size: 14)
-                    Text("tap anywhere").font(Typeface.mono(9)).tracking(em: 0.1, size: 9)
-                        .foregroundStyle(Color(red: 45 / 255, green: 33 / 255, blue: 25 / 255, opacity: 0.68))
-                }
+                Text("STOP").font(Typeface.sans(22, .extraBold)).tracking(em: 0.04, size: 22)
             }
             .foregroundStyle(Color(hex: 0x2d2119))
             .frame(width: min(size.width * 0.86, 360))
@@ -321,8 +283,7 @@ struct GameView: View {
             HStack(spacing: 7) {
                 Text("◆").font(.system(size: 12)).foregroundStyle(Palette.orange)
                     .modifier(FlameDance(active: streak >= 3 && !reducedMotion))
-                Text("STREAK").font(Typeface.mono(9)).tracking(em: 0.14, size: 9)
-                Text("\(streak)").font(Typeface.mono(15))
+                Text("\(streak)").font(Typeface.mono(18))
                     .keyframeAnimator(initialValue: Punch(), trigger: store.successToken) { content, punch in
                         content.scaleEffect(punch.scale).rotationEffect(.degrees(punch.rotation))
                     } keyframes: { _ in
@@ -334,8 +295,8 @@ struct GameView: View {
             .accessibilityLabel("Streak")
             .accessibilityValue("\(streak)")
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text("\(store.game.difficulty.title) · \(store.game.difficulty.multiplierText)×")
-                .font(Typeface.mono(9)).tracking(em: 0.04, size: 9)
+            Text(store.game.difficulty.title)
+                .font(Typeface.mono(12)).tracking(em: 0.04, size: 12)
                 .foregroundStyle(Color(hex: 0x675f53))
                 .padding(.horizontal, 9).padding(.vertical, 5)
                 .background(Color.white.opacity(0.22), in: Capsule())
@@ -359,8 +320,7 @@ struct GameView: View {
         .padding(.horizontal, 20)
         .padding(.top, 7)
         .padding(.bottom, 2)
-        .frame(minHeight: 60)
-        .overlay(alignment: .top) { Rectangle().fill(Palette.line).frame(height: 1) }
+        .frame(minHeight: 52)
     }
 
     // MARK: Dialogs
@@ -390,11 +350,6 @@ struct GameView: View {
 
 // MARK: - Pieces
 
-private struct CopyBottomKey: PreferenceKey {
-    static let defaultValue: CGFloat = 130
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
-}
-
 struct Punch { var scale: CGFloat = 1; var rotation: Double = 0 }
 
 extension AnyTransition {
@@ -423,7 +378,9 @@ private struct PageBackground: View {
                     .init(color: .white.opacity(0.7), location: 0.15),
                     .init(color: .white.opacity(0), location: 0.45),
                 ], center: UnitPoint(x: 0.5, y: 0.46), startRadius: 0, endRadius: radius)
+                GrainOverlay()
             }
+            .compositingGroup()
         }
         .ignoresSafeArea()
     }
@@ -663,12 +620,12 @@ private struct ResultCard: View {
                 .font(Typeface.sans(40, .extraBold)).tracking(em: -0.06, size: 40)
                 .foregroundStyle(miss ? missColor : Palette.ink)
                 .padding(.vertical, 1)
-            Text("+\(result.earnedXP) XP · \(miss ? "keep going" : "toast experience")")
-                .font(Typeface.sans(12, .bold)).tracking(em: 0.01, size: 12)
+            Text("+\(result.earnedXP) XP")
+                .font(Typeface.sans(16, .bold)).tracking(em: 0.01, size: 16)
                 .foregroundStyle(miss ? Color(hex: 0x8a3a32) : Color(hex: 0xa06328))
                 .padding(.top, 2)
             Text(miss ? (score > 0 ? "run score \(formatScore(score))" : "the toaster got you") : String(format: "%.2fs to spare", result.remaining))
-                .font(Typeface.mono(9)).tracking(em: 0.08, size: 9)
+                .font(Typeface.mono(11))
                 .foregroundStyle(Color(hex: 0x736a5b))
             if let skin = result.unlocked.last {
                 Button { openSkin(skin) } label: {

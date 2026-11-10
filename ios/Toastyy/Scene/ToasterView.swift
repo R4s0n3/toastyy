@@ -56,8 +56,8 @@ struct ToasterView: UIViewRepresentable {
         private var previousPhase: Game.Phase = .ready
         private var previousTime = 0.0
         private var lastSize = CGSize.zero
-        private var insetTop: CGFloat = 130
-        private var insetBottom: CGFloat = 128
+        private var insetTop: CGFloat = 44
+        private var insetBottom: CGFloat = 72
         private var presentation: Float = 0
         private var visualLever: Float = 0
         private var knobAngle: Float = 0
@@ -359,7 +359,7 @@ struct ToasterView: UIViewRepresentable {
             return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()! - xs.min()!, height: ys.max()! - ys.min()!)
         }
 
-        /// Fit the toaster to 88% of the width, or the space between copy and tray, then
+        /// Fit generously across the stage, allowing the tray to overlap the base, then
         /// slide the camera so it is centered there (the web uses a projection view offset).
         private func frameCamera() {
             let size = lastSize
@@ -375,10 +375,11 @@ struct ToasterView: UIViewRepresentable {
             let contentBottom = max(contentTop + 100, size.height - insetBottom)
             var fov: Float = 28
             var bounds = screenBounds(eye: eye, target: target, fov: fov, size: size)
-            let fit = Float(min(size.width * 0.88 / bounds.width, (contentBottom - contentTop) / bounds.height))
+            let fit = Float(min(size.width * 1.02 / bounds.width, (contentBottom - contentTop) / bounds.height))
             fov = 2 * atan(tan(fov * .pi / 360) / fit) * 180 / .pi
             bounds = screenBounds(eye: eye, target: target, fov: fov, size: size)
-            let dx = Float(bounds.midX - size.width / 2)
+            // A small optical offset balances the cabinet’s angled silhouette.
+            let dx = Float(bounds.midX - (size.width / 2 + 8))
             let dy = Float(bounds.midY - (contentTop + contentBottom) / 2)
             let (_, right, up) = basis(eye: eye, target: target)
             let perPoint = 2 * simd_length(target - eye) * tan(fov * .pi / 360) / Float(size.height)
@@ -423,7 +424,7 @@ struct ToasterView: UIViewRepresentable {
             let pose = presentation * presentation * (3 - 2 * presentation)
             latchKick *= exp(-dt * 10)
             stage.orientation = simd_quatf(angle: -7 * .pi / 180 + pose * 0.26, axis: [0, 1, 0])
-            stage.scale = SIMD3(repeating: 1 + 0.09 * pose)
+            stage.scale = SIMD3(repeating: 1 + 0.03 * pose)
             stage.position = [-0.006 * pose, -0.004 * pose - latchKick * 0.0028, 0]
 
             let heat = Float(store.visualHeat), danger = Float(store.visualDanger)
