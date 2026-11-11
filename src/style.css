@@ -676,3 +676,6 @@ progress::-moz-progress-bar { background: var(--skin-color, #b98e50); border-rad
   .collection-detail h3 { font-size: 21px; }
   .collection-link { font-size: 6px; }
 }
+
+.legal-links { display: flex; justify-content: center; gap: 24px; margin: 18px 0 0; font-size: 12px; }
+.legal-links a { text-underline-offset: 3px; }
