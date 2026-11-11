@@ -1,4 +1,6 @@
-Toastyy 1.0.0 (5)
+Toastyy 1.0.0 (6)
+
+New in build 6: live Toastyy privacy and support links in Settings.
 
 What to test
 • Larger toaster, readable XP and score, background-only paper grain.

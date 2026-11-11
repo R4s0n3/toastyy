@@ -1,4 +1,4 @@
-# Gerätetest · Toastyy 1.0.0 (5)
+# Gerätetest · Toastyy 1.0.0 (6)
 
 Datum / iPhone / iOS: ____________________
 
@@ -12,7 +12,7 @@ Aktueller Befund des Eigentümers: Remove Ads meldet „purchase is not availabl
 - [ ] Ton/Haptik getrennt schalten; Stummmodus; App wechseln, sperren, fortsetzen und neu starten.
 - [ ] Einstellungen → Remove Ads: Preis lädt, Sandbox-Kauf abschließen und Abbruch prüfen. TestFlight-Käufe sind Sandbox-Käufe.
 - [ ] Restore Purchases mit demselben Apple-Account: werbefrei bleibt aktiv. Kauf stellt keine XP wieder her.
-- [ ] Werbung vor dem Kauf prüfen: mindestens sechs abgeschlossene Runden, zwei Minuten seit Start/letzter Anzeige, dann verbrannte Runde. Nur Testanzeigen in Build 5.
+- [ ] Werbung vor dem Kauf prüfen: mindestens sechs abgeschlossene Runden, zwei Minuten seit Start/letzter Anzeige, dann verbrannte Runde. Nur Testanzeigen in Build 6.
 - [ ] Einwilligung akzeptieren, ablehnen und – soweit vorgeschrieben – über Advertising Privacy Choices erneut öffnen. Spiel bleibt bei fehlender Werbung/Offline nutzbar.
 - [ ] Nach verifiziertem Remove Ads keine Anzeigen. Erneuter App-Start behält Berechtigung.
 - [ ] Ohne Netzwerk starten/spielen; Kauf- und Datenschutzfehler lassen sich schließen.
