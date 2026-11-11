@@ -23,6 +23,7 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
     private var initialized = false
     private var started = false
     private var updates: Task<Void, Never>?
+    private var productLoadFailure: String?
     private var policy = AdBreakPolicy(now: ProcessInfo.processInfo.systemUptime)
     private let uiTesting = ProcessInfo.processInfo.arguments.contains("--ui-testing")
     // Explicit release gate: switch off only after AdMob consent/privacy setup is complete.
@@ -51,8 +52,17 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
     }
 
     func loadProduct() async {
-        do { product = try await Product.products(for: [Self.productID]).first }
-        catch { product = nil }
+        do {
+            product = try await Product.products(for: [Self.productID])
+                .first { $0.id == Self.productID }
+            productLoadFailure = product == nil
+                ? "Apple's store did not return Remove Ads. Please contact support with code STORE-PRODUCT-MISSING."
+                : nil
+        } catch {
+            product = nil
+            let storeError = error as NSError
+            productLoadFailure = "Could not connect to Apple's store. Please try again. Support code: \(storeError.domain) (\(storeError.code))."
+        }
     }
 
     private func refreshEntitlements() async {
@@ -72,7 +82,10 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
         busy = true
         defer { busy = false }
         if product == nil { await loadProduct() }
-        guard let product else { message = "The purchase is not available yet. Please try again later."; return }
+        guard let product else {
+            message = productLoadFailure ?? "Could not load Remove Ads. Please try again."
+            return
+        }
         do {
             switch try await product.purchase() {
             case .success(let result):

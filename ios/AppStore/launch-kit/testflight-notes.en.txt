@@ -1,6 +1,6 @@
-Toastyy 1.0.0 (7)
+Toastyy 1.0.0 (8)
 
-New in build 7: non-personalized ad requests only; publisher first-party ID disabled. Privacy choices and test advertising remain enabled.
+New in build 8: Remove Ads now reports whether Apple returned no product or a StoreKit error code. Please report the full displayed support code. Non-personalized test advertising remains enabled.
 
 What to test
 • Larger toaster, readable XP and score, background-only paper grain.

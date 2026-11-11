@@ -83,3 +83,15 @@ personalization and publisher first-party ID disabled. Test-ad gate stays on.
 Archive and 16 core tests pass; verify consent, privacy-choice reopening and test
 ads on device. Retry Remove Ads after the freshly activated Paid Apps Agreement
 has propagated. No purchase/restore success claimed yet.
+
+## Build 8 — StoreKit diagnostics
+
+After the owner reported that Remove Ads remained unavailable on build 7 despite
+an active Paid Apps Agreement, the product loader now distinguishes:
+- STORE-PRODUCT-MISSING: Apple returned no matching product.
+- StoreKit/network failure: displays NSError domain and numeric code.
+
+No raw errors, account identifiers, tokens, or receipts are displayed. Retry on
+the next purchase tap remains available. Native archive passed. This does not
+claim a successful sandbox purchase; product metadata, availability, developer
+portal capability, and bank/tax state remain account-side checks.
