@@ -75,7 +75,7 @@
 
         <div class="game-copy" id="gameCopy" aria-live="polite">
           <p class="eyebrow" id="eyebrow">YOUR TOASTER, YOUR RULES</p>
-          <h1 id="headline">Set it. Pull it.</h1>
+          <h1 id="headline">Pull to toast ↓</h1>
           <p class="subcopy" id="subcopy">Pull, time it right, and level up your toast.</p>
         </div>
 
@@ -89,8 +89,8 @@
           <div class="spread-tray" id="spreadTray">
             <button class="collection-button" id="collectionButton" type="button" aria-haspopup="dialog">
               <img id="equippedThumb" alt="" />
-              <span class="equipped-copy"><span id="playerLevel">LV. 01</span><strong id="equippedName">Dry toast</strong><progress id="levelMeter" max="70" value="0" aria-label="Progress to the next toast level"></progress><small id="nextLevel">70 XP to Happy camper</small></span>
-              <span class="collection-link" aria-hidden="true">YOUR TOASTS <b id="collectionCount">1 / 8</b> ↗</span>
+              <span class="equipped-copy"><span id="playerLevel">LV. 01</span><strong id="equippedName">Dry toast</strong><progress id="levelMeter" max="1000000" value="0" aria-label="Progress to the next toast level"></progress><small id="nextLevel">0 XP</small></span>
+              <span class="collection-link" aria-hidden="true"><b id="collectionCount">1 / 2</b> ›</span>
             </button>
           </div>
         </div>
@@ -99,7 +99,7 @@
 
         <button class="stop-button" id="stopButton" type="button" disabled>
           <span class="stop-icon"></span>
-          <span>STOP TOASTER</span>
+          <span data-stop-label>WAIT</span>
           <small>tap anywhere</small>
         </button>
 
@@ -123,7 +123,7 @@
         <p class="eyebrow">SMALL SLICE. BIG POTENTIAL.</p>
         <h2 id="collectionTitle">Toast, evolved.</h2>
         <p class="collection-intro">From humble bread to a little work of art.</p>
-        <div class="collection-xp"><span id="collectionLevel">LEVEL 01</span><progress id="collectionLevelMeter" max="70" value="0" aria-label="Toast level progress"></progress><span id="collectionTotalXp">0 XP / 70 XP</span></div>
+        <div class="collection-xp"><span id="collectionLevel">LEVEL 01</span><progress id="collectionLevelMeter" max="1000000" value="0" aria-label="Toast level progress"></progress><span id="collectionTotalXp">0 XP / 1,000,000 XP</span></div>
         <div class="collection-layout">
           <div class="collection-detail">
             <div class="collection-preview-wrap"><canvas id="collectionPreview" role="img" aria-label="Toast finish preview"></canvas><span>MOVE TO CATCH THE LIGHT</span></div>
@@ -136,7 +136,7 @@
           </div>
           <div class="collection-list" id="collectionList" aria-label="Toast levels, in order"></div>
         </div>
-        <p class="collection-footnote">Every slice earns XP. Perfect timing earns more. New levels equip your new toast automatically.</p>
+        <p class="collection-footnote">Every slice earns XP. Perfect timing earns more. Reach 1,000,000 XP to unlock DAYDREAM.</p>
       </dialog>
 
       <dialog class="help-dialog" id="helpDialog" aria-labelledby="settingsTitle">
@@ -154,10 +154,10 @@
         <h3>How to play</h3>
         <ol>
           <li><strong>Turn</strong> the round knob to set difficulty.</li>
-          <li><strong>Start</strong> with dry toast. Earn XP to unlock painted designs, ceramics, and metals.</li>
+          <li><strong>Start</strong> with dry toast. Earn 1,000,000 XP to unlock DAYDREAM.</li>
           <li><strong>Pull</strong> the side lever down.</li>
-          <li><strong>Wait</strong> while the toaster heats up.</li>
-          <li><strong>Tap</strong> as late as you dare—before it pops. Nail it for bonus XP and your next toast level.</li>
+          <li><strong>Wait</strong> until the STOP button lights up.</li>
+          <li><strong>Tap</strong> during the final moment before it pops. Early taps keep toasting and earn nothing.</li>
         </ol>
         <nav class="legal-links" aria-label="Support and privacy"><a href="/support.html">Support</a><a href="/privacy.html">Privacy</a></nav>
         <button class="dialog-ok" id="dialogOk" type="button">GOT IT</button>

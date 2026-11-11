@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Manrope:wght@500;700;800&display=swap');
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/Manrope-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/Manrope-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/Manrope-ExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'DM Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/DMMono-Medium.ttf') format('truetype'); }
 
 :root {
   font-family: 'Manrope', ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -61,7 +64,7 @@ button:disabled { cursor: default; }
 #app {
   min-height: 100dvh;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
   background:
     radial-gradient(circle at 50% 46%, rgba(255,255,255,.7) 0 15%, transparent 45%),
     var(--paper);
@@ -72,7 +75,7 @@ button:disabled { cursor: default; }
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 20;
+  z-index: -1;
   pointer-events: none;
   opacity: .13;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
@@ -679,3 +682,35 @@ progress::-moz-progress-bar { background: var(--skin-color, #b98e50); border-rad
 
 .legal-links { display: flex; justify-content: center; gap: 24px; margin: 18px 0 0; font-size: 12px; }
 .legal-links a { text-underline-offset: 3px; }
+
+/* Native launch layout: compact copy, generous stage and readable progress. */
+.topbar { position: absolute; top: max(25px, env(safe-area-inset-top)); left: 24px; min-height: 0; padding: 0; }
+.brand > span:last-child, .top-sound-button { display: none; }
+.scorebar { position: relative; min-height: 100px; margin: 0 24px; padding: max(18px, env(safe-area-inset-top)) 0 20px 46px; border: 0; grid-template-columns: 1fr 1fr; }
+.score-item strong { font-size: clamp(30px, 7vw, 42px); }
+.score-item--right strong { font-size: clamp(25px, 6vw, 34px); }
+.status-pill { position: absolute; top: calc(100% + 10px); right: 0; min-width: 80px; }
+.game-copy { top: 14px; left: 24px; width: calc(100% - 145px); transform: none; text-align: left; }
+.game-copy.is-hidden { transform: translateY(-8px); }
+.game-copy .eyebrow, .game-copy .subcopy { display: none; }
+.game-copy h1 { font-size: clamp(18px, 4.7vw, 25px); line-height: 1.2; letter-spacing: -.05em; }
+.heat-meter { display: none; }
+.spread-tray { bottom: 10px; }
+.collection-button { width: min(92vw, 520px); min-height: 88px; padding: 12px 15px; gap: 14px; }
+.collection-button > img { width: 44px; height: 54px; }
+.equipped-copy { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; align-items: center; }
+.equipped-copy > span { font-size: 14px; color: var(--ink); }
+.equipped-copy > small { grid-column: 2; grid-row: 1; text-align: right; color: var(--ink); font: 14px 'DM Mono', monospace; }
+.equipped-copy progress { grid-column: 1 / -1; grid-row: 2; height: 10px; margin: 0; }
+.equipped-copy > strong { grid-column: 1 / -1; grid-row: 3; font-size: 14px; color: #71634d; }
+.collection-link { font-size: 25px; }
+.collection-link b { display: none; }
+.streak > span:not(.flame) { display: none; }
+.mode-chip { font-size: 11px; }
+.stop-button { min-height: 60px; }
+.stop-button:disabled { background: #e2d9c5; box-shadow: 0 5px 0 #b9ad95; }
+.stop-button small { display: none; }
+.stop-button > span:nth-child(2) { align-self: center; font-size: 18px; }
+.result-card { top: 12%; padding: 12px 18px; }
+@media (min-width: 700px) { .scorebar { margin: 0 38px; } .topbar { left: 38px; } .game-copy { left: 38px; } }
+@media (max-height: 680px) { .scorebar { min-height: 76px; padding-bottom: 10px; } .topbar { top: max(18px, env(safe-area-inset-top)); } .collection-button { min-height: 74px; padding: 8px 12px; } .equipped-copy { gap: 5px 8px; } .game-copy { top: 10px; } }

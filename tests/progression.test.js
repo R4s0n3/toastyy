@@ -11,10 +11,10 @@ test('starts with dry toast and saves cumulative experience between sessions', (
   progression = awardExperience(progression, 'nice').progression;
   progression = restoreProgression(JSON.parse(JSON.stringify(progression)), null);
   assert.equal(progression.xp, 45);
-  assert.equal(levelProgress(progression).next.id, 'doodle');
+  assert.equal(levelProgress(progression).next.id, 'prism');
   const reward = awardExperience(progression, 'pale');
-  assert.deepEqual(reward.unlocked.map(skin => skin.id), ['doodle']);
-  assert.equal(reward.progression.equipped, 'doodle');
+  assert.deepEqual(reward.unlocked, []);
+  assert.equal(reward.progression.equipped, 'dry');
   assert.equal(reward.progression.saves, 2);
 });
 
@@ -37,7 +37,7 @@ test('locked skins cannot be equipped and unlocked earlier skins can be chosen',
   assert.equal(equipSkin(initial, 'unknown'), initial);
   const leveled = awardExperience(initial, 'perfect').progression;
   assert.equal(equipSkin(leveled, 'dry').equipped, 'dry');
-  assert.equal(restoreProgression({...leveled, equipped:'gold'}, null).equipped, 'doodle');
+  assert.equal(restoreProgression({...leveled, equipped:'gold'}, null).equipped, 'dry');
 });
 
 test('perfect timing and streaks earn more XP; invalid events earn nothing', () => {
@@ -53,6 +53,17 @@ test('legacy play counts toward new levels and damaged saves recover', () => {
   assert.equal(restoreProgression(null, {saves:8}, {perfects:2,best:2000}).xp, 270);
   assert.equal(restoreProgression({version:2,xp:'bad',equipped:'prism',saves:-3},null).equipped,'dry');
   assert.equal(restoreProgression({version:2,xp:Infinity},null).xp,0);
-  assert.equal(restoreProgression({version:2,xp:3000,equipped:'prism'},null).equipped,'prism');
-  assert.equal(levelProgress({xp:5000}).next,undefined);
+  assert.equal(restoreProgression({version:2,xp:1000000,equipped:'prism'},null).equipped,'prism');
+  assert.equal(levelProgress({xp:1000000}).next,undefined);
+});
+
+
+test('launch collection preserves old XP while replacing retired skins', () => {
+  assert.deepEqual(toastSkins.map(skin => skin.id), ['dry', 'prism']);
+  const migrated = restoreProgression({version:2,xp:3000,equipped:'gold',saves:20}, null);
+  assert.equal(migrated.xp,3000);
+  assert.equal(migrated.saves,20);
+  assert.equal(migrated.equipped,'dry');
+  assert.equal(equipSkin(migrated,'prism'),migrated);
+  assert.equal(levelProgress(migrated).next.xp,1000000);
 });

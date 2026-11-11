@@ -19,3 +19,14 @@ Validate the web client with `npm run check`, `npm test`, and `npm run build`.
 Validate native gameplay with `cd ios && swift test`. See the
 [native README](ios/README.md) for simulator builds, UI tests, port coverage,
 and validation limits.
+
+## Current web release
+
+The web game matches the native launch progression (Dry Toast / DAYDREAM at
+1,000,000 XP), final 720 ms stop window, larger toaster framing, camera follow,
+background-only grain, readable XP and shifted PULL markings. Existing local XP
+and records are preserved; retired skins fall back to an eligible launch skin.
+
+Web advertising and purchases are not integrated. Fonts are self-hosted.
+Deploy the root Vite app to the existing Coolify service at
+https://toasty.app.miomideal.com/; support/privacy routes remain static files.

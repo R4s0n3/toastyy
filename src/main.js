@@ -6,6 +6,7 @@ import toasterUrl from '../toaster.glb?url';
 import { applyToastSkin, skinThumbnail } from './toast-materials.js';
 import { toastSkins, skinById, restoreProgression, awardExperience, levelProgress, equipSkin } from './progression.js';
 import { toastLayout, sampleToastPop } from './toast-motion.js';
+import { canStopRound, stopWindowMs } from './timing.js';
 import './style.css';
 
 const $ = (selector) => document.querySelector(selector);
@@ -877,9 +878,10 @@ function paintSurfaceMarkings() {
       context.fill();
     }
   });
-  print('PULL', 0.022, 0.125, 0.0036);
-  line([[0.021, 0.117], [0.021, 0.099]], accent);
-  line([[0.0185, 0.102], [0.021, 0.099], [0.0235, 0.102]], accent);
+  const pullHintZ = 0.036;
+  print('PULL', pullHintZ, 0.125, 0.0036);
+  line([[pullHintZ, 0.117], [pullHintZ, 0.099]], accent);
+  line([[pullHintZ - 0.0025, 0.102], [pullHintZ, 0.099], [pullHintZ + 0.0025, 0.102]], accent);
   print('BROWNING', 0.034, 0.047, 0.0028, ink, 0.0002);
   print(modes[game.mode].label, 0.034, 0.0405, 0.0039, accent, 0.00025);
   [-0.86, -0.29, 0.29, 0.86].forEach((angle, index) => {
@@ -1056,14 +1058,15 @@ function startRound() {
   const difficulty = Math.min((game.round - 1) * 0.025, 0.18);
   game.popAt = mode.min + Math.random() * mode.range;
   game.popAt *= 1 - difficulty;
-  game.dangerAt = game.popAt - 720;
+  game.dangerAt = game.popAt - stopWindowMs;
   game.nextTickAt = game.roundStart + 620;
   game.dangerBuzzed = false;
   toastTarget = -toastLayout.travel;
   ui.leverHitbox.disabled = true;
   ui.toasterMenu.inert = true;
   ui.toasterMenu.setAttribute('aria-hidden', 'true');
-  ui.stopButton.disabled = false;
+  ui.stopButton.disabled = true;
+  ui.stopButton.querySelector('[data-stop-label]').textContent = 'WAIT';
   ui.stopButton.classList.add('is-visible');
   ui.heatLines.classList.add('is-visible');
   ui.heatMeter.classList.add('is-visible');
@@ -1072,7 +1075,7 @@ function startRound() {
   ui.toasterMenu.classList.add('is-hidden');
   ui.helpButton.disabled = true;
   setStatus('TOASTING', 'is-hot');
-  setCopy(`${mode.label} · ROUND ${game.round}`, 'Listen closely…', 'Tap anywhere as late as you dare.');
+  setCopy('', 'Wait for STOP', '');
   playLatch();
   startHum();
   buzz(25);
@@ -1085,6 +1088,7 @@ function stopRound() {
     missRound();
     return;
   }
+  if (!canStopRound(elapsed, game.popAt)) return;
   const remaining = Math.max(0, game.popAt - elapsed);
   const progress = clamp(elapsed / game.popAt, 0, 1);
   const timingScore = Math.round(1000 * Math.pow(1 - remaining / game.popAt, 3));
@@ -1218,7 +1222,7 @@ function resetRound() {
   ui.game.classList.remove('is-danger', 'is-shaking', 'is-flashing', 'is-perfect-flash');
   ui.best.classList.remove('is-best');
   setStatus('READY');
-  setCopy(game.round ? 'SET UP THE NEXT SLICE' : 'YOUR TOASTER, YOUR RULES', 'Set it. Pull it.', 'Pull, time it right, and level up your toast.');
+  setCopy('', 'Pull to toast ↓', '');
 }
 
 function pointerOnLeverPlane(event) {
@@ -1383,7 +1387,7 @@ function refreshCollectionControls() {
   ui.collectionCount.textContent = `${level.current.level} / ${toastSkins.length}`;
   ui.levelMeter.max = level.next ? level.needed : 1;
   ui.levelMeter.value = level.next ? level.earned : 1;
-  ui.nextLevel.textContent = level.next ? `${level.next.xp - level.xp} XP to ${level.next.name}` : 'Every toast, earned.';
+  ui.nextLevel.textContent = `${level.xp.toLocaleString('en')} XP`;
   ui.collectionButton.classList.toggle('has-new', newSkinIds.length > 0);
   ui.collectionButton.setAttribute('aria-label', `Toast collection. Level ${level.current.level}. Equipped: ${equipped.name}. ${ui.nextLevel.textContent}`);
   ui.collectionLevel.textContent = `LEVEL ${String(level.current.level).padStart(2, '0')}`;
@@ -1712,11 +1716,9 @@ function playMiss() {
   tone(48, 0.12, 'square', 0.055, 0.02);
 }
 
-function resize() {
-  cancelLeverDrag();
+function frameCamera(pose = 0) {
   const rect = ui.game.getBoundingClientRect();
   if (!rect.width || !rect.height) return;
-  renderer.setSize(rect.width, rect.height, false);
   camera.aspect = rect.width / rect.height;
   camera.clearViewOffset();
   camera.fov = 28;
@@ -1725,8 +1727,8 @@ function resize() {
   camera.updateProjectionMatrix();
   camera.updateMatrixWorld();
   if (framingPoints) {
-    const contentTop = ui.gameCopy.getBoundingClientRect().bottom - rect.top + 18;
-    const contentBottom = rect.height - ui.spreadTray.offsetHeight - 45;
+    const contentTop = ui.gameCopy.getBoundingClientRect().bottom - rect.top + 8;
+    const contentBottom = rect.height - ui.spreadTray.offsetHeight + 10;
     const availableHeight = Math.max(100, contentBottom - contentTop);
     const screenBounds = () => {
       const points = framingPoints.map((point) => projectToScreen(point.clone()));
@@ -1736,16 +1738,31 @@ function resize() {
       };
     };
     let bounds = screenBounds();
-    const fit = Math.min(rect.width * 0.88 / (bounds.right - bounds.left), availableHeight / (bounds.bottom - bounds.top));
+    const fit = Math.min(rect.width * 1.02 / (bounds.right - bounds.left), availableHeight / (bounds.bottom - bounds.top));
     camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / fit));
     camera.updateProjectionMatrix();
     bounds = screenBounds();
+    const restPosition = new THREE.Vector3(0.012, -0.02, 0);
+    const movingX = framingPoints.map(point => projectToScreen(point.clone().sub(restPosition)
+      .multiplyScalar(stage.scale.x).applyAxisAngle(new THREE.Vector3(0, 1, 0), stage.rotation.y)
+      .add(stage.position)).x);
+    const idleCenterX = (bounds.left + bounds.right) / 2;
+    const movingCenterX = (Math.min(...movingX) + Math.max(...movingX)) / 2;
+    const centerX = THREE.MathUtils.lerp(idleCenterX, movingCenterX, pose);
     camera.setViewOffset(rect.width, rect.height,
-      (bounds.left + bounds.right - rect.width) / 2,
+      centerX - rect.width / 2 - 8 * (1 - pose),
       (bounds.top + bounds.bottom - contentTop - contentBottom) / 2,
       rect.width, rect.height);
   }
   updateControlScreenPositions();
+}
+
+function resize() {
+  cancelLeverDrag();
+  const rect = ui.game.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  renderer.setSize(rect.width, rect.height, false);
+  frameCamera(presentation * presentation * (3 - 2 * presentation));
 }
 
 const resizeObserver = new ResizeObserver(resize);
@@ -1788,12 +1805,15 @@ function render(now) {
   }
   const pose = presentation * presentation * (3 - 2 * presentation);
   stage.rotation.y = THREE.MathUtils.lerp(0, 0.26, pose);
-  stage.scale.setScalar(THREE.MathUtils.lerp(1, 1.09, pose));
+  stage.scale.setScalar(THREE.MathUtils.lerp(1, 1.03, pose));
   stage.position.x = THREE.MathUtils.lerp(0.012, 0.006, pose);
   latchKick *= Math.exp(-delta * 10);
   stage.position.y = THREE.MathUtils.lerp(-0.02, -0.024, pose) - latchKick * 0.0028;
   shadow.material.opacity = THREE.MathUtils.lerp(0.42, 0.54, pose);
-  if (presentation !== previousPresentation) updateLeverScreenPosition();
+  if (presentation !== previousPresentation) {
+    frameCamera(pose);
+    updateLeverScreenPosition();
+  }
 
   if (leverReturnStart && !game.dragging) {
     const elapsed = Math.max(0, now - leverReturnStart) / 1000;
@@ -1809,6 +1829,10 @@ function render(now) {
       renderer.render(scene, camera);
       return;
     }
+    const canStop = canStopRound(elapsed, game.popAt);
+    ui.stopButton.disabled = !canStop;
+    ui.stopButton.querySelector('[data-stop-label]').textContent = canStop ? 'STOP' : 'WAIT';
+    ui.headline.textContent = canStop ? 'Stop now!' : 'Wait for STOP';
     const heat = clamp(elapsed / game.popAt, 0, 1);
     const danger = clamp((elapsed - game.dangerAt) / Math.max(game.popAt - game.dangerAt, 1), 0, 1);
     if (!reducedMotion.matches && heat > 0.25) {
