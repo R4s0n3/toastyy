@@ -1,7 +1,8 @@
 # Toastyy – Ergänzung zur Datenschutzerklärung
 
-Redaktionsentwurf zur Ergänzung von https://miomideal.com/privacy-policy.
-Noch nicht veröffentlicht. Vor Veröffentlichung die endgültigen AdMob-
+Redaktionsvorlage. Eine angepasste eigenständige Fassung ist seit 11. November
+2026 unter https://toasty.app.miomideal.com/privacy.html veröffentlicht
+(Quelle: public/privacy.html). Vor Veröffentlichung die endgültigen AdMob-
 Einwilligungsnachrichten, Anbieter, Aufbewahrung und Kontaktangaben abgleichen.
 Die vorhandenen Abschnitte zu Verantwortlichem, Betroffenenrechten und
 Aufsichtsbehörde gelten auch für Toastyy.

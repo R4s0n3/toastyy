@@ -6,7 +6,7 @@
   "runtime": "iOS 26.5",
   "source": "XCTest attachments; unmodified PNG screenshots",
   "uiTesting": "isolated local progress; ads and StoreKit network work disabled",
-  "uploadedToAppStoreConnect": false,
+  "uploadedToAppStoreConnect": true,
   "screenshots": [
     {
       "file": "01-ready.png",
@@ -28,9 +28,14 @@
     },
     {
       "file": "remove-ads-review.png",
-      "sha256": "f079e04adbba72115d631bf4e6038b8005725d8c3911dd3c44244b8f6f61b292",
+      "sha256": "a290f5dd3f28e7e6bc43aeb9e376c087ade97d89468fbb0d0e6d9b89ff7b79bd",
       "width": 1206,
-      "height": 2622
+      "height": 2622,
+      "build": 6,
+      "captured": "2026-11-11"
     }
-  ]
+  ],
+  "uploadedAt": "2026-11-11",
+  "uploadScope": "Three gameplay images from build 5 are uploaded; refreshed build 6 Remove Ads review image pending replacement.",
+  "reviewScreenshotBuild": 6
 }

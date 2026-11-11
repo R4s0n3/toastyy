@@ -2,6 +2,19 @@
 
 Prepared for App Store Connect app 6826357624.
 
+## Current release preparation · 2026-11-11
+
+- Build 6 uploaded to TestFlight; includes dedicated support/privacy links.
+- Both build 6 simulator UI tests passed.
+- Support/privacy pages deployed and HTTPS-verified on toasty.app.miomideal.com.
+- app-ads.txt also deployed and text/plain-verified on miomideal.com for crawler discovery.
+- Current description, review notes and three gameplay screenshots saved in Apple.
+- Support/marketing URLs and app-specific privacy policy URL saved in Apple.
+- Paid Apps Agreement remains Pending User Info; W-8BEN is Missing Tax Info.
+  Bank details are Processing and DSA trader verification is In Review.
+- AdMob consent configuration and final App Privacy declaration remain open.
+- The public app has not been submitted for review. Advertising remains test-only.
+
 ## Latest handoff · 2026-11-10
 
 - TestFlight 1.0.0 (5) uploaded successfully with the approved enlarged toaster,

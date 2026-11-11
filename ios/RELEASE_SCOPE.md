@@ -38,3 +38,8 @@ keep toasting and earn no points or XP. Includes build 3's test-ad and StoreKit 
 Adds smooth camera tracking as the toaster turns at the start of a round. The
 active cabinet centers in the stage and returns to its optical idle offset
 afterward. Reduced Motion uses an immediate transition.
+
+## TestFlight 1.0.0 (6)
+
+Uses Toastyy-specific support and privacy pages on toasty.app.miomideal.com.
+Settings includes a direct Support link. Advertising remains in test mode.

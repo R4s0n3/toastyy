@@ -1,6 +1,6 @@
 # Toastyy · Release-Paket
 
-Stand: 10. November 2026. TestFlight 1.0.0 (5) wurde erfolgreich hochgeladen.
+Stand: 11. November 2026. TestFlight 1.0.0 (6) wurde erfolgreich hochgeladen.
 Apple-Verarbeitungsstatus und Testgruppen sind ohne erneute Anmeldung nicht geprüft.
 
 ## Vorbereitet
@@ -16,27 +16,34 @@ Apple-Verarbeitungsstatus und Testgruppen sind ohne erneute Anmeldung nicht gepr
   Keine Alpha-Kanäle; `screenshot-manifest.json` enthält Prüfsummen. Noch nicht hochgeladen.
 - `todo.html`: persönliche Checkliste mit lokal gespeicherten Häkchen und Export.
 
-## Website veröffentlichen
+## Website ist live · 11. November 2026
 
-Das lokale Website-Projekt liegt unter `/Users/heroine/ras/dev/mio/mio_page`.
-Dort liegen fremde, noch nicht committete Änderungen. Deshalb wurde keine
-Website-Veröffentlichung oder Änderung an diesen Arbeiten vorgenommen.
+- Support: https://toasty.app.miomideal.com/support.html
+- App-Datenschutz: https://toasty.app.miomideal.com/privacy.html
+- Publisher-Datei: https://toasty.app.miomideal.com/app-ads.txt
+- Crawler-Einstieg: https://miomideal.com/app-ads.txt
 
-1. `website/toastyy-support.html` nach `mio_page/public/toastyy-support.html` kopieren.
-2. `website/app-ads.txt` nach `mio_page/public/app-ads.txt` kopieren. Vorhandene Publisher-Zeilen erhalten.
-3. Die geprüfte Toastyy-Ergänzung in `mio_page/src/app/privacy-policy/page.tsx` einbauen.
-   Die Aussage zu fehlenden Marketing-Cookies ausdrücklich auf die Website begrenzen.
-4. Gezielt Website-Änderungen prüfen und deployen; keine fremden Änderungen blind mit veröffentlichen.
-5. Öffentlich prüfen:
-   - `https://miomideal.com/toastyy-support.html` zeigt die Support-Seite.
-   - `https://miomideal.com/app-ads.txt` liefert den Publisher-Eintrag als Text.
-   - `https://miomideal.com/privacy-policy` enthält die geprüfte Toastyy-Ergänzung.
-6. Erst dann in App Store Connect die Support-URL auf die neue Seite ändern.
-   In AdMob die Store-App und Entwicklerwebsite korrekt zuordnen und Verifizierung anstoßen.
+Alle vier URLs liefern HTTP 200 mit dem erwarteten Inhalt. Support/Marketing-URL
+und Privacy Policy URL sind in App Store Connect gespeichert. Der Webserver
+behält `.html`-Adressen, damit die Spiel-Fallbackroute diese Seiten nicht ersetzt.
+
+Google crawlt bei verschachtelten Subdomains höchstens die erste Subdomain und
+anschließend die Hauptdomain. Daher wurde auf der Hauptdomain ausschließlich
+`public/app-ads.txt` ergänzt (mio_page Commit 4729be2). Die übrigen Mio-Seiten und
+nicht committeten Arbeiten im ursprünglichen Checkout bleiben unverändert.
+Quelle: https://support.google.com/admob/answer/9363762?hl=en
+
+## Aktueller Apple-Status
+
+Direkt geprüft am 11. November: Paid Apps Agreement = Pending User Info;
+W-8BEN = Missing Tax Info; Banking = Processing; DSA = In Review.
+Remove Ads ist angelegt, weltweit verfügbar und kostet in Deutschland EUR 2.99.
+Der steuerliche Abschluss und ein erfolgreicher Kauf-/Restore-Test auf dem
+Gerät stehen aus. Keine Steuerangaben wurden stellvertretend bestätigt.
 
 ## Finale Veröffentlichung
 
-Build 5 nutzt weiterhin **Testanzeigen**. Er wurde nicht zur öffentlichen App-Prüfung eingereicht.
+Build 6 nutzt weiterhin **Testanzeigen**. Er wurde nicht zur öffentlichen App-Prüfung eingereicht.
 Nach Konto-, Datenschutz-, UMP- und Gerätetests einen neuen Produktionsbuild mit
 neuer Buildnummer erstellen; Testanzeigen erst nach vollständiger Konfiguration
 abschalten. Produktionswerbung beim Test nur mit registrierten Testgeräten prüfen.
@@ -45,6 +52,7 @@ Manuelle Freigabe in App Store Connect beibehalten.
 
 ## Zugriffe
 
-App Store Connect und AdMob zeigten beim heutigen Check jeweils die Anmeldeseite.
-Kein Accountstatus, Vertrag, Datenschutzeintrag oder Store-Screenshot wurde in
-App Store Connect verändert. Keine privaten Schlüssel oder Zugangsdaten liegen im Paket.
+App Store Connect ist angemeldet. Store-Texte und Screenshots wurden aktualisiert.
+AdMob benötigt noch Anmeldung; finale App-Privacy-Antworten und öffentliche
+Einreichung sind offen. Coolify wurde per privater API-Eingabe genutzt.
+Keine privaten Schlüssel oder Zugangsdaten liegen im Paket.

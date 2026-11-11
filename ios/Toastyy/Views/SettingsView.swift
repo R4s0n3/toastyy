@@ -45,6 +45,7 @@ struct SettingsDialog: View {
                         .disabled(monetization.busy)
                         .accessibilityIdentifier("restorePurchases")
                     Link("Privacy Policy", destination: Monetization.privacyURL)
+                    Link("Support", destination: Monetization.supportURL)
                     if monetization.privacyOptionsRequired {
                         Button("Advertising Privacy Choices") { Task { await monetization.privacyOptions() } }
                     }

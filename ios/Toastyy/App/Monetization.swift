@@ -8,7 +8,8 @@ import UserMessagingPlatform
 @MainActor
 final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate {
     static let productID = "com.toastyy.app.removeads"
-    static let privacyURL = URL(string: "https://miomideal.com/privacy-policy")!
+    static let privacyURL = URL(string: "https://toasty.app.miomideal.com/privacy.html")!
+    static let supportURL = URL(string: "https://toasty.app.miomideal.com/support.html")!
     @Published private(set) var adsRemoved = false
     @Published private(set) var product: Product?
     @Published private(set) var busy = false

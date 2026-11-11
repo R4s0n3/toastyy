@@ -64,8 +64,9 @@ user data, signing certificates, provisioning profiles, or private keys.
 - The repository includes an app icon, launch configuration, privacy manifest,
   version/build settings, and an archive-enabled shared scheme.
 - The project uses team `9XGAA62775` and bundle identifier `com.toastyy.app`,
-  matching App Store Connect app `6826357624`. Version 1.0.0 build 5 contains
-  the enlarged toaster, final stop window and active camera tracking. Increment the build number for later uploads.
+  matching App Store Connect app `6826357624`. Version 1.0.0 build 6 contains
+  the enlarged toaster, final stop window, active camera tracking, and dedicated
+  support/privacy links. Increment the build number for later uploads.
 - The GitHub workflow builds/tests the simulator app. It does **not** sign,
   archive, or upload to TestFlight. Automated uploads can be configured after
   the first working signed upload.
