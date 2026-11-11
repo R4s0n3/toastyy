@@ -31,6 +31,11 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
     func start() async {
         guard !started, !uiTesting else { return }
         started = true
+        // Apply before consent processing, SDK initialization, or any ad request.
+        // These restrictions also apply if the user consents to personalization.
+        let adConfiguration = MobileAds.shared.requestConfiguration
+        adConfiguration.publisherPrivacyPersonalizationState = .disabled
+        adConfiguration.setPublisherFirstPartyIDEnabled(false)
         updates = Task { [weak self] in
             for await result in Transaction.updates {
                 guard let self else { return }
@@ -130,8 +135,12 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
             await MobileAds.shared.start()
         }
         let unit = usesTestAds ? "ca-app-pub-3940256099942544/4411468910" : "ca-app-pub-5162263720207671/8412648888"
+        let request = Request()
+        let extras = Extras()
+        extras.additionalParameters = ["npa": "1"]
+        request.register(extras)
         do {
-            let ad = try await InterstitialAd.load(with: unit, request: Request())
+            let ad = try await InterstitialAd.load(with: unit, request: request)
             guard !adsRemoved, ConsentInformation.shared.canRequestAds else { return }
             interstitial = ad
             loadedAt = ProcessInfo.processInfo.systemUptime

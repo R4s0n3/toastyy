@@ -1,11 +1,11 @@
 {
   "checkedAt": "2026-11-11",
   "version": "1.0.0",
-  "build": 6,
-  "testFlightUpload": "build 6 uploaded successfully; Apple reports Processing",
-  "testFlightProcessingAndGroups": "Build 6 Processing; build 5 available to Toastyy Internal. Build 6 group availability pending Apple processing.",
+  "build": 7,
+  "testFlightUpload": "build 7 upload succeeded; uploaded package is processing per Xcode",
+  "testFlightProcessingAndGroups": "build 6 verified in Toastyy Internal; build 7 Apple processing and group availability pending",
   "appStoreConnect": "authenticated; description/review notes and current gameplay screenshots saved; build 5 remains selected in version 1.0.0 draft pending replacement by processed build 6",
-  "adMob": "login required; no messages/configuration changed",
+  "adMob": "Owner confirmed active European consent message assigned to Toastyy. Store link pending public listing. Build 7 disables personalization and publisher first-party ID.",
   "productionAdsEnabled": false,
   "publicAppAdsTxt": "HTTP 200 text/plain verified at miomideal.com/app-ads.txt and toasty.app.miomideal.com/app-ads.txt",
   "publicPrivacyPolicy": "HTTP 200 with Toastyy-specific content at https://toasty.app.miomideal.com/privacy.html; URL saved in App Store Connect",
@@ -13,9 +13,9 @@
   "uiTests": "build 6: both UI tests passed on iPhone 17 Pro / iOS 26.5",
   "website": "support/privacy pages live via Coolify; only publisher text file added to main Mio website",
   "appReviewSubmission": "not submitted",
-  "removeAdsDeviceTest": "Owner reports unavailable product. Paid Apps Agreement is not active; real purchase/restore test still required.",
+  "removeAdsDeviceTest": "Still unavailable immediately after agreement activation; retry and sandbox purchase/restore validation pending.",
   "websiteOrigin": "https://toasty.app.miomideal.com",
-  "paidAppsAgreement": "Pending User Info; W-8BEN Missing Tax Info observed in Apple Business",
+  "paidAppsAgreement": "Active, reported by owner after tax form completion",
   "banking": "Processing; Apple says updates should appear within 24 hours",
   "euTraderStatus": "In Review",
   "removeAdsProduct": "com.toastyy.app.removeads, Non-Consumable, all regions, Germany EUR 2.99; Prepare for Submission",
@@ -27,5 +27,7 @@
     "toastyyCommit": "91eb268",
     "publisherRoot": "rluo23nduh3dcor62kikfvss",
     "publisherRootCommit": "4729be2"
-  }
+  },
+  "advertisingPrivacy": "Build 7: PPT disabled, publisher first-party ID disabled, npa=1 on every interstitial. Physical-device check pending; App Privacy draft in progress.",
+  "coreTests": "Build 7 source: 16 tests passed with Xcode toolchain"
 }

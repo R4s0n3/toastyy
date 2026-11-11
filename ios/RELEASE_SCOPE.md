@@ -43,3 +43,10 @@ afterward. Reduced Motion uses an immediate transition.
 
 Uses Toastyy-specific support and privacy pages on toasty.app.miomideal.com.
 Settings includes a direct Support link. Advertising remains in test mode.
+
+## Build 7 — non-personalized advertising
+
+Disables publisher personalization and Publisher First-Party ID before consent
+processing / SDK start. Adds npa=1 to every interstitial request. Consent gating
+and the test-ad release gate remain enabled. Requires physical-device consent
+and advertising checks before final App Privacy publication / review submission.

@@ -1,6 +1,6 @@
 # App Privacy – Arbeitsblatt, noch nicht in Apple veröffentlicht
 
-Stand: 10. November 2026 · Build 5 · Google Mobile Ads 13.11.0 / UMP 3.1.0.
+Stand: 11. November 2026 · Build 7 · Google Mobile Ads 13.11.0 / UMP 3.1.0.
 
 Die App speichert XP, Rekorde und Einstellungen lokal. Daraus folgt NICHT „Keine Daten erfasst“, sobald das Werbe-SDK läuft. Kein Firebase Analytics und keine eigene Spielstand-API sind eingebunden. StoreKit prüft verifizierte Käufe; Kartendaten gehen nicht an Toastyy.
 
@@ -26,3 +26,17 @@ Quellen:
 - https://developer.apple.com/app-store/app-privacy-details/
 
 Status: vorbereitet; Kontoanmeldung und finale Werbekonfiguration fehlen. Keine Datenschutzangaben wurden verändert oder veröffentlicht.
+
+## Konfigurationsänderung Build 7
+
+Nach ausdrücklicher Entscheidung für nicht personalisierte Werbung:
+- Publisher Privacy Personalization State vor SDK-Start auf disabled gesetzt.
+- Publisher First-Party-ID vor SDK-Start deaktiviert.
+- Jede Google-Anzeigenanfrage enthält npa=1.
+- Keine ATT-Abfrage / kein eigener IDFA-Zugriff. Testanzeigen weiterhin aktiv.
+- Die sieben SDK-Datentypen bleiben offengelegt. Keine Behauptung „keine Daten“.
+
+Das unveränderte Google-SDK-Manifest beschreibt dessen mögliche Verwendung,
+inklusive Device-ID-Tracking. Es wird nicht überschrieben. Die App-spezifische
+Tracking-Antwort muss die eingeschränkte Konfiguration sowie reale AdMob-
+Partner/Anfragen berücksichtigen; Gerätekontrolle steht noch aus.

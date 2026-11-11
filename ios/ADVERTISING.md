@@ -9,7 +9,7 @@
 - App Store Connect product: 6826369405. Base country Germany, EUR 2.99;
   worldwide availability with Apple's localized prices. Montenegro's EUR price
   was explicitly set to EUR 2.99 as well.
-- Privacy link: https://miomideal.com/privacy-policy
+- Privacy link: https://toasty.app.miomideal.com/privacy.html
 
 `ToastyyUseTestAds` in Info.plist remains **true**. The production unit is never
 requested in this build. Test ads still require successful UMP consent setup;
@@ -52,3 +52,22 @@ purchase/restoration UI, and the privacy link. Simulator UI tests exercise the
 normal game with advertising disabled; they do not validate Google's consent
 messages or a real StoreKit sandbox transaction. The public privacy page and
 remaining account-side requirements must be completed separately.
+
+## TestFlight 1.0.0 (7): non-personalized advertising
+
+Before consent processing and Google Mobile Ads initialization, Toastyy sets
+`publisherPrivacyPersonalizationState = .disabled` and disables Publisher
+First-Party ID. Every interstitial request also carries `npa=1`, including test
+and production units and reloads after privacy choices. UMP consent gating
+remains required; non-personalized ads still process identifiers and diagnostics
+for purposes such as fraud prevention and frequency capping. No ATT permission
+or IDFA access is requested by the app. Test advertising remains enabled.
+
+Device testing must confirm consent/denial, reopening privacy choices and ad
+presentation. These configuration changes are not a network audit and do not
+mean “no data collected”. Keep the SDK data types disclosed; finalize App Privacy
+against this build and the actual AdMob account settings before publication.
+
+References:
+- https://developers.google.com/admob/ios/targeting
+- https://developers.google.com/admob/ios/privacy/strategies

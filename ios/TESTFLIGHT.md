@@ -75,3 +75,11 @@ Apple references: [SDK upload requirements](https://developer.apple.com/news/upc
 [create an app record](https://developer.apple.com/help/app-store-connect/create-an-app-record/add-a-new-app),
 [upload builds](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds),
 [TestFlight overview](https://developer.apple.com/help/app-store-connect/test-a-beta-version/testflight-overview/).
+
+## Build 7 (11 November 2026)
+
+Restricts Google advertising to non-personalized requests with publisher
+personalization and publisher first-party ID disabled. Test-ad gate stays on.
+Archive and 16 core tests pass; verify consent, privacy-choice reopening and test
+ads on device. Retry Remove Ads after the freshly activated Paid Apps Agreement
+has propagated. No purchase/restore success claimed yet.

@@ -1,6 +1,6 @@
-Toastyy 1.0.0 (6)
+Toastyy 1.0.0 (7)
 
-New in build 6: live Toastyy privacy and support links in Settings.
+New in build 7: non-personalized ad requests only; publisher first-party ID disabled. Privacy choices and test advertising remain enabled.
 
 What to test
 • Larger toaster, readable XP and score, background-only paper grain.
