@@ -95,3 +95,16 @@ No raw errors, account identifiers, tokens, or receipts are displayed. Retry on
 the next purchase tap remains available. Native archive passed. This does not
 claim a successful sandbox purchase; product metadata, availability, developer
 portal capability, and bank/tax state remain account-side checks.
+
+## Build 9 — release candidate
+
+Production interstitial ID enabled for Release only. Debug always uses test ads.
+Non-personalization, publisher first-party ID disabled, and consent gating stay
+in place. User-facing StoreKit errors now give retry guidance without internal
+diagnostic codes; OSLog retains product lookup diagnostics. Purchase and restore
+were confirmed by the owner on build 8; repeat smoke test after updating.
+
+Before App Review: publish completed App Privacy answers, select build 9 and
+include the first Remove Ads purchase in the same submission. Confirm DSA
+verification before public EU distribution. AdMob store link/readiness follows
+the public App Store listing; ad absence does not prevent playing.

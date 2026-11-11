@@ -54,7 +54,7 @@
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5162263720207671~7785962920</string>
 	<key>ToastyyUseTestAds</key>
-	<true/>
+	<false/>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

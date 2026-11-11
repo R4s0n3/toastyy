@@ -1,5 +1,6 @@
 import Combine
 import GoogleMobileAds
+import OSLog
 import StoreKit
 import ToastyyCore
 import UIKit
@@ -24,10 +25,16 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
     private var started = false
     private var updates: Task<Void, Never>?
     private var productLoadFailure: String?
+    private let storeLogger = Logger(subsystem: "com.toastyy.app", category: "StoreKit")
     private var policy = AdBreakPolicy(now: ProcessInfo.processInfo.systemUptime)
     private let uiTesting = ProcessInfo.processInfo.arguments.contains("--ui-testing")
-    // Explicit release gate: switch off only after AdMob consent/privacy setup is complete.
-    var usesTestAds: Bool { Bundle.main.object(forInfoDictionaryKey: "ToastyyUseTestAds") as? Bool ?? true }
+    var usesTestAds: Bool {
+        #if DEBUG
+        return true
+        #else
+        return Bundle.main.object(forInfoDictionaryKey: "ToastyyUseTestAds") as? Bool ?? true
+        #endif
+    }
 
     func start() async {
         guard !started, !uiTesting else { return }
@@ -56,12 +63,14 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
             product = try await Product.products(for: [Self.productID])
                 .first { $0.id == Self.productID }
             productLoadFailure = product == nil
-                ? "Apple's store did not return Remove Ads. Please contact support with code STORE-PRODUCT-MISSING."
+                ? "Remove Ads is temporarily unavailable. Please try again later."
                 : nil
+            if product == nil { storeLogger.error("Remove Ads product missing from StoreKit response") }
         } catch {
             product = nil
             let storeError = error as NSError
-            productLoadFailure = "Could not connect to Apple's store. Please try again. Support code: \(storeError.domain) (\(storeError.code))."
+            storeLogger.error("Product lookup failed: \(storeError.domain, privacy: .public) (\(storeError.code))")
+            productLoadFailure = "Could not load Remove Ads from the App Store. Please check your connection and try again."
         }
     }
 
@@ -80,6 +89,7 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
     func purchase() async {
         guard !busy, !adsRemoved else { return }
         busy = true
+        message = nil
         defer { busy = false }
         if product == nil { await loadProduct() }
         guard let product else {
@@ -105,6 +115,7 @@ final class Monetization: NSObject, ObservableObject, FullScreenContentDelegate 
     func restore() async {
         guard !busy else { return }
         busy = true
+        message = nil
         defer { busy = false }
         do {
             try await AppStore.sync()

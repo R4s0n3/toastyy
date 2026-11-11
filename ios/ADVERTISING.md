@@ -11,8 +11,9 @@
   was explicitly set to EUR 2.99 as well.
 - Privacy link: https://toasty.app.miomideal.com/privacy.html
 
-`ToastyyUseTestAds` in Info.plist remains **true**. The production unit is never
-requested in this build. Test ads still require successful UMP consent setup;
+For build 9, `ToastyyUseTestAds` in Info.plist is **false**: Release builds
+request the production unit. Debug builds always use Google's test unit. All
+ads still require successful UMP consent setup;
 if that fails or the device is offline, the game simply continues without ads.
 UI automation disables ads and StoreKit network work with `--ui-testing`.
 
@@ -25,11 +26,8 @@ handled through StoreKit, rather than a locally trusted purchase flag.
 
 ## Before live advertising / App Review
 
-1. Expand the public privacy page with a clearly identified Toastyy section.
-   The current page describes the website and shop, not the app. Document local
-   XP/records/settings, Google Mobile Ads and UMP, advertising data processing,
-   consent and withdrawal, third-country transfers, retention/deletion,
-   contact details, and Apple in-app purchases according to the final setup.
+1. The app-specific public privacy page is live. Keep it aligned with the final
+   SDK/consent configuration.
 2. In AdMob Privacy & messaging, publish applicable consent messages assigned
    to Toastyy. Verify consent, denial, privacy-choice reopening, offline
    behavior, and test-ad presentation on a physical iPhone.
@@ -42,8 +40,9 @@ handled through StoreKit, rather than a locally trusted purchase flag.
 5. Update App Store Connect privacy disclosures for the SDK and final consent
    configuration. The SDK embeds its own privacy manifest; the app's manifest
    describes its own local APIs. No ATT permission is requested by this build.
-6. Only after these checks, set `ToastyyUseTestAds` to false for the public
-   release and test the production configuration with registered test devices.
+6. Build 9 enables the production unit. Register physical test devices in AdMob
+   before testing production advertising; do not click live ads during testing.
+   AdMob readiness/store verification remains pending the public store listing.
 
 ## TestFlight 1.0.0 (3)
 
@@ -71,3 +70,12 @@ against this build and the actual AdMob account settings before publication.
 References:
 - https://developers.google.com/admob/ios/targeting
 - https://developers.google.com/admob/ios/privacy/strategies
+
+## Build 9
+
+Owner confirmed sandbox purchase and restoration working on build 8. Build 9
+removes diagnostic codes from user-facing purchase messages and logs lookup
+failures through OSLog instead. No receipts/account data are logged. Release
+ad requests use production IDs; the build-7 non-personalization restrictions
+remain unchanged. No-fill / ad-load failures continue silently without blocking
+the game.

@@ -56,3 +56,13 @@ and advertising checks before final App Privacy publication / review submission.
 Distinguishes an empty Apple product response (STORE-PRODUCT-MISSING) from a
 StoreKit fetch error (domain/code). Both paths still permit retrying on the next
 purchase tap. No purchase success or account-side correction is assumed.
+
+## Build 9 — production advertising and purchase messages
+
+Release builds use the production AdMob interstitial; Debug builds always use
+Google's test unit. Personalization remains disabled, publisher first-party ID
+remains off, npa=1 and UMP gating remain enforced. Missing ads never block play.
+StoreKit diagnostic codes move to system logs; users see retry guidance. Old
+purchase messages clear when starting a new purchase/restore. Owner confirmed
+sandbox purchase and restore working on build 8. App Privacy publication and
+DSA status must still be checked before review/release.
