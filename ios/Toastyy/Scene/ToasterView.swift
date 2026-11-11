@@ -303,9 +303,10 @@ struct ToasterView: UIViewRepresentable {
                         c.fillEllipse(in: CGRect(x: x(z + 0.013) - radius, y: y(height) - radius, width: radius * 2, height: radius * 2))
                     }
                 }
-                print("PULL", 0.022, 0.125, size: 0.0036)
-                line([(0.021, 0.117), (0.021, 0.099)])
-                line([(0.0185, 0.102), (0.021, 0.099), (0.0235, 0.102)])
+                let pullHintZ: CGFloat = 0.036
+                print("PULL", pullHintZ, 0.125, size: 0.0036)
+                line([(pullHintZ, 0.117), (pullHintZ, 0.099)])
+                line([(pullHintZ - 0.0025, 0.102), (pullHintZ, 0.099), (pullHintZ + 0.0025, 0.102)])
                 print("BROWNING", 0.034, 0.047, size: 0.0028, spacing: 0.0002)
                 print(store.game.difficulty.title, 0.034, 0.0405, size: 0.0039, color: accent, spacing: 0.00025)
                 let selectedIndex = Difficulty.allCases.firstIndex(of: store.game.difficulty) ?? 1
